@@ -1,0 +1,16 @@
+^config-uat\.yml$
+
+^\.gitlab-ci\.yml$
+^\.lintr$
+^.*\.Rproj$
+^\.Rproj\.user$
+
+^_
+_files$
+
+^CONTRIBUTING\.md$
+^CODEOWNERS$
+docs
+rsconnect/
+^jrHealthCheckConnect\.Rproj$
+/rsconnect/
