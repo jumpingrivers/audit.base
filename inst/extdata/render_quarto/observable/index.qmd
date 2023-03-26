@@ -1,8 +1,8 @@
 ---
 title: "observable plot"
 author: "Norah Jones"
-format: 
-  html: 
+format:
+  html:
     code-fold: true
 ---
 
@@ -11,7 +11,7 @@ format:
 ```{ojs}
 data = FileAttachment("seattle-weather.csv")
   .csv({typed: true})
-  
+
 Plot.plot({
   width: 800, height: 500, padding: 0,
   color: { scheme: "blues", type: "sqrt"},
@@ -20,7 +20,7 @@ Plot.plot({
     Plot.cell(data, Plot.group({fill: "mean"}, {
       x: d => d.date.getUTCDate(),
       y: d => d.date.getUTCMonth(),
-      fill: "precipitation", 
+      fill: "precipitation",
       inset: 0.5
     }))
   ]

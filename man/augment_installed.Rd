@@ -2,9 +2,12 @@
 % Please edit documentation in R/software-versions.R
 \name{augment_installed}
 \alias{augment_installed}
+\alias{print_colour_versions}
 \title{Augments installed software columns}
 \usage{
 augment_installed(installed, verbose = TRUE)
+
+print_colour_versions(installed)
 }
 \arguments{
 \item{installed}{A tibble with columns software and installed_version}

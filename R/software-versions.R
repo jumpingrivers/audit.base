@@ -10,6 +10,8 @@ augment_installed = function(installed, verbose = TRUE) {
   installed
 }
 
+#' @rdname augment_installed
+#' @export
 print_colour_versions = function(installed) {
   for (i in seq_len(nrow(installed))) {
     row = installed[i, ]
@@ -22,7 +24,7 @@ print_colour_versions = function(installed) {
 }
 
 # Returns X.Y from X.Y.Z
-get_major = function(v) as.character(unlist(stringr::str_match(v, "^([0-9]+\\.[0-9]*)")[, 2]))
+get_major = function(v) as.character(unlist(stringr::str_match(v, "^([0-9]*\\.[0-9]*)")[, 2]))
 # Returns Z - use numeric for comparisons
 get_point = function(v) as.numeric(unlist(stringr::str_match(v, "\\.([0-9]*)$")[, 2]))
 
