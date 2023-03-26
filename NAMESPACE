@@ -2,8 +2,13 @@
 
 export(augment_installed)
 export(base_check)
+export(check_sys_deps)
+export(create_config)
 export(get_debug_level)
 export(get_suppress)
+export(init_r6_check)
+export(init_r6_checks)
 export(logger)
+export(print_colour_versions)
 import(R6)
 importFrom(rlang,.data)

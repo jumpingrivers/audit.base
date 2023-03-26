@@ -22,7 +22,7 @@ logger = R6::R6Class(
                                   passed = passed,
                                   time_taken = round(time_taken, 2))
 
-      msg_function(passed, "Check finished")
+      msg_function(passed)
 
       return(invisible(self))
     },
@@ -39,11 +39,12 @@ logger = R6::R6Class(
 )
 
 msg_function = function(has_passed, msg) {
-  msg_fun = if (is.na(has_passed) || has_passed) {
-    cli::cli_alert_success
+  if (is.na(has_passed)) {
+    cli::cli_alert_info("Check skipped")
+  } else if (has_passed) {
+    cli::cli_alert_success("Check finished")
   } else {
-    cli::cli_alert_danger
+    cli::cli_alert_danger("Check finished")
   }
-  msg_fun(msg)
   return(invisible(NULL))
 }

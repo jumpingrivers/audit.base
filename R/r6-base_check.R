@@ -31,7 +31,9 @@ base_check = R6::R6Class(
       if (is.na(private$context)) stop("Missing context")
       if (is.na(private$short)) stop("Missing short")
 
-      c("group" = private$group, "short" = private$short, "context" = private$context)
+      c("group" = private$group,
+        "short" = private$short,
+        "context" = private$context)
     }
   ),
   private = list(
