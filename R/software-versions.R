@@ -42,7 +42,7 @@ get_latest_versions = function() {
   versions = system.file("extdata", "versions", "versions.csv",
                          package = "uatBase",
                          mustWork = TRUE)
-  versions = dplyr::as_tibble(utils::read.csv(versions))
+  versions = dplyr::as_tibble(utils::read.csv(versions, comment.char = "#"))
   versions$major = get_major(versions$version)
   versions$point = get_point(versions$version)
   return(versions)

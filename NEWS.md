@@ -1,3 +1,7 @@
+# uatBase 0.1.1 _2023-05-01_
+- feat: Update software versions
+- feat: Add rsvg-convert example
+
 # uatBase 0.1.0 _2023-03-26_
 - feat: Add pro-drivers versions
 - feat: Move config creation
