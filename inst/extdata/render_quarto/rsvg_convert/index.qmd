@@ -1,0 +1,11 @@
+---
+title: "rsvg-convert"
+format: pdf
+
+---
+
+## Quarto
+
+Including an SVG natively in a PDF
+
+[![The Jumping Rivers Logo](logo.svg)](https://jumpingrivers.com)
