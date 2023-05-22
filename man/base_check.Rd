@@ -14,7 +14,7 @@ Inherited underlying base class.
 Shouldn't be used directly
 }
 \section{Super class}{
-\code{\link[uatBase:logger]{uatBase::logger}} -> \code{base_check}
+\code{\link[audit.base:logger]{audit.base::logger}} -> \code{base_check}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -40,9 +40,9 @@ Shouldn't be used directly
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="uatBase" data-topic="logger" data-id="get_log"><a href='../../uatBase/html/logger.html#method-logger-get_log'><code>uatBase::logger$get_log()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="uatBase" data-topic="logger" data-id="start_logger"><a href='../../uatBase/html/logger.html#method-logger-start_logger'><code>uatBase::logger$start_logger()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="uatBase" data-topic="logger" data-id="stop_logger"><a href='../../uatBase/html/logger.html#method-logger-stop_logger'><code>uatBase::logger$stop_logger()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="get_log"><a href='../../audit.base/html/logger.html#method-logger-get_log'><code>audit.base::logger$get_log()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="start_logger"><a href='../../audit.base/html/logger.html#method-logger-start_logger'><code>audit.base::logger$start_logger()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="stop_logger"><a href='../../audit.base/html/logger.html#method-logger-stop_logger'><code>audit.base::logger$stop_logger()</code></a></span></li>
 </ul>
 </details>
 }}
