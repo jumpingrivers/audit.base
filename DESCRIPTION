@@ -1,10 +1,11 @@
 Type: Package
-Package: uatBase
-Title: Posit Connect Health Check
-Version: 0.1.1
+Package: audit.base
+Title: Base package for Posit Checks
+Version: 0.2.0
 Authors@R:
     person("Jumping", "Rivers", , "info@jumpingrivers.com", role = c("aut", "cre"))
-Description: Base package for sharing classes between UAT packages.
+Description: Base package for sharing classes between posit audit packages.
+    Unlikely to be useful as is.
 License: file LICENSE
 Depends: 
     R (>= 4.1.0)

@@ -1,3 +1,6 @@
+# uatBase 0.2.0 _2023-05-22_
+- feat: Move to GitHub and rename package
+
 # uatBase 0.1.1 _2023-05-01_
 - feat: Update software versions
 - feat: Add rsvg-convert example
