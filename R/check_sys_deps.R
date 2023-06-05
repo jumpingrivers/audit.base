@@ -40,7 +40,7 @@ get_os_sys_deps = function(os) {
   version = stringr::str_remove_all(version, "\"")
   version = stringr::str_replace_all(version, "\\.", "_")
   version = version[!is.na(version)]
-  pkg_dir = system.file("extdata", "sys_deps", package = "uatBase",
+  pkg_dir = system.file("extdata", "sys_deps", package = "audit.base",
                         mustWork = TRUE)
   pre_req_path = file.path(pkg_dir, paste0("pre-req-", id, "-", version, ".txt"))
 
