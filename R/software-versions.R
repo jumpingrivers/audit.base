@@ -39,7 +39,7 @@ add_upgrade_column = function(installed) {
 }
 
 get_latest_versions = function() {
-  versions = system.file("extdata", "versions", "versions.csv",
+  versions = system.file("extdata", "versions", "software.csv",
                          package = "audit.base",
                          mustWork = TRUE)
   versions = dplyr::as_tibble(utils::read.csv(versions, comment.char = "#"))
