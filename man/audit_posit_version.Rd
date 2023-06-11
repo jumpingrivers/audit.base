@@ -4,7 +4,10 @@
 \alias{audit_posit_version}
 \title{Audit Posit Server}
 \usage{
-audit_posit_version(server_version, type = c("connect", "workbench"))
+audit_posit_version(
+  server_version,
+  type = c("connect", "workbench", "drivers")
+)
 }
 \arguments{
 \item{server_version}{Current Posit version}
