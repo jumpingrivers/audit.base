@@ -23,8 +23,8 @@ get_posit_versions = function(type = c("connect", "workbench")) {
 #' @param server_version Current Posit version
 #' @export
 #' @examples
-#' audit_server_version("2023.03.0", type = "connect")
-audit_server_version = function(server_version, type = c("connect", "workbench")) {
+#' audit_posit_version("2023.03.0", type = "connect")
+audit_posit_version = function(server_version, type = c("connect", "workbench")) {
   type = match.arg(type)
   versions = get_posit_versions(type = type)
   row_number = lookup_version(server_version, type = type)

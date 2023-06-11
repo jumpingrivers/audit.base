@@ -20,5 +20,5 @@ test_that("Testing check server", {
   v = lookup_version(server_version = "2022.10.31", type = "connect")
   expect_true(is.na(v))
 
-  expect_message(audit_server_version("2022.10.0", type = "connect"), regexp = "out of date")
+  expect_message(audit_posit_version("2022.10.0", type = "connect"), regexp = "out of date")
 })
