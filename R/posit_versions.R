@@ -7,7 +7,7 @@
 #' @examples
 #' get_posit_versions(type = "connect")
 #'
-get_posit_versions = function(type = c("connect", "workbench")) {
+get_posit_versions = function(type = c("connect", "workbench", "drivers")) {
   type = match.arg(type)
   fname = system.file("extdata", "versions", paste0(type, ".csv"),
                       mustWork = TRUE, package = "audit.base")
@@ -24,7 +24,7 @@ get_posit_versions = function(type = c("connect", "workbench")) {
 #' @export
 #' @examples
 #' audit_posit_version("2023.03.0", type = "connect")
-audit_posit_version = function(server_version, type = c("connect", "workbench")) {
+audit_posit_version = function(server_version, type = c("connect", "workbench", "drivers")) {
   type = match.arg(type)
   versions = get_posit_versions(type = type)
   row_number = lookup_version(server_version, type = type)

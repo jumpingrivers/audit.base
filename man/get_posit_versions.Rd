@@ -4,7 +4,7 @@
 \alias{get_posit_versions}
 \title{Posit Versions}
 \usage{
-get_posit_versions(type = c("connect", "workbench"))
+get_posit_versions(type = c("connect", "workbench", "drivers"))
 }
 \arguments{
 \item{type}{Posit product of interest}
