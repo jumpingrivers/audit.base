@@ -6,10 +6,10 @@
 get_quarto_server_header = function(out) {
   headers = out$server_headers$headers
   headers = dplyr::filter(headers, .data$primary_header)
-  headers = dplyr::arrange(headers, dplyr::desc(.data$status)) |>
+  headers = dplyr::arrange(headers, dplyr::desc(.data$status)) %>%
     dplyr::mutate(
       header_docs = purrr::map(.data$documentation, ~ htmltools::a(href = .x, "(docs)")),
-      message = purrr::map2(message, .data$header_docs, ~ gt::html(paste(.x, as.character(.y))))) |>
+      message = purrr::map2(message, .data$header_docs, ~ gt::html(paste(.x, as.character(.y))))) %>%
     dplyr::mutate(value = ifelse(is.na(.data$value), "-", .data$value))
   dplyr::select(headers,  -"documentation", -"header_docs", -"primary_header")
 }
@@ -18,8 +18,8 @@ get_quarto_server_header = function(out) {
 #' @export
 get_quarto_sys_deps = function(out) {
   sys_deps = out$sys_deps
-  sys_deps |>
-    dplyr::group_by(.data$sys_libs) |>
+  sys_deps %>%
+    dplyr::group_by(.data$sys_libs) %>%
     dplyr::reframe(pkg = paste(sort(.data$r_pkg_names), collapse = ", "),
                    n = length(.data$sys_libs))
 }

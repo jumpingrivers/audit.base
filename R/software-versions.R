@@ -33,8 +33,8 @@ add_upgrade_column = function(installed) {
   latest = truncate_versions(latest, installed)
 
   dplyr::left_join(latest, installed,
-                   by = c("software" = "software", "major" = "installed_major")) |>
-    dplyr::mutate(upgrade = .data$point > .data$installed_point) |>
+                   by = c("software" = "software", "major" = "installed_major")) %>%
+    dplyr::mutate(upgrade = .data$point > .data$installed_point) %>%
     dplyr::mutate(upgrade = is.na(.data$upgrade) | .data$upgrade)
 }
 
@@ -51,12 +51,12 @@ get_latest_versions = function() {
 # Determine the earliest version installed
 # Then discard all previous version from latest
 truncate_versions = function(latest, installed) {
-  min_installed = installed |>
-    dplyr::group_by(.data$software) |>
+  min_installed = installed %>%
+    dplyr::group_by(.data$software) %>%
     dplyr::summarise("min_major" = min(.data$installed_major))
 
-  truncated_latest = latest |>
-    dplyr::left_join(min_installed, by = c("software" = "software")) |>
+  truncated_latest = latest %>%
+    dplyr::left_join(min_installed, by = c("software" = "software")) %>%
     dplyr::filter(.data$major >= .data$min_major | is.na(.data$min_major))
 
   dplyr::select(truncated_latest, -"min_major")
