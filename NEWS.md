@@ -1,3 +1,7 @@
+# audit.base 0.5.0 _2023-06-21_
+- feat: Use RSPM API for sys deps
+- feat: Move OS querying code to {audit.base}
+
 # audit.base 0.4.1 _2023-06-13_
 - feat: Use %>% instead of |>
 

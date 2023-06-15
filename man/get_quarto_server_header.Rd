@@ -5,7 +5,7 @@
 \alias{get_quarto_sys_deps}
 \alias{get_quarto_software_versions}
 \alias{get_quarto_deploy}
-\alias{get_quarto_server_version_msg}
+\alias{get_quarto_posit_version_msg}
 \title{Quarto Helper Functions}
 \usage{
 get_quarto_server_header(out)
@@ -16,17 +16,13 @@ get_quarto_software_versions(out)
 
 get_quarto_deploy(out)
 
-get_quarto_server_version_msg(out, versions)
+get_quarto_posit_version_msg(out, type = c("connect", "workbench", "drivers"))
 }
 \arguments{
 \item{out}{Output from check}
 
-\item{versions}{A tibble with server versions}
+\item{type}{Posit product of interest}
 }
 \description{
 In general not used by users.
-}
-\details{
-The server versions are available as get_connect_versions()
-or get_workbench_versions()
 }

@@ -4,13 +4,10 @@
 \alias{audit_posit_version}
 \title{Audit Posit Server}
 \usage{
-audit_posit_version(
-  server_version,
-  type = c("connect", "workbench", "drivers")
-)
+audit_posit_version(posit_version, type = c("connect", "workbench", "drivers"))
 }
 \arguments{
-\item{server_version}{Current Posit version}
+\item{posit_version}{Current Posit version}
 
 \item{type}{Posit product of interest}
 }

@@ -4,12 +4,12 @@
 \alias{check_sys_deps}
 \title{Checking System Dependencies}
 \usage{
-check_sys_deps(os, libs, debug_level = 0:2)
+check_sys_deps(os_release, installed_libs, debug_level = 0:2)
 }
 \arguments{
-\item{os}{Output from /etc/os-release}
+\item{os_release}{Output from /etc/os-release}
 
-\item{libs}{Output from apt list --installed}
+\item{installed_libs}{Output get_installed_libs()}
 
 \item{debug_level}{Integer - 0, 1, 2}
 }
