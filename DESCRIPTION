@@ -1,7 +1,7 @@
 Type: Package
 Package: audit.base
 Title: Base package for Posit Checks
-Version: 0.4.1
+Version: 0.5.0
 Authors@R:
     person("Jumping", "Rivers", , "info@jumpingrivers.com", role = c("aut", "cre"))
 Description: Base package for sharing classes between posit audit
@@ -19,7 +19,9 @@ Imports:
     rlang,
     stringr,
     tibble,
-    yaml
+    yaml,
+    httr,
+    processx
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

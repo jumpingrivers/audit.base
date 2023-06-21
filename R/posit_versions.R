@@ -20,14 +20,14 @@ get_posit_versions = function(type = c("connect", "workbench", "drivers")) {
 #'
 #' Used for side effect, i.e. printing to console
 #' @inheritParams get_posit_versions
-#' @param server_version Current Posit version
+#' @param posit_version Current Posit version
 #' @export
 #' @examples
 #' audit_posit_version("2023.03.0", type = "connect")
-audit_posit_version = function(server_version, type = c("connect", "workbench", "drivers")) {
+audit_posit_version = function(posit_version, type = c("connect", "workbench", "drivers")) {
   type = match.arg(type)
   versions = get_posit_versions(type = type)
-  row_number = lookup_version(server_version, type = type)
+  row_number = lookup_version(posit_version, type = type)
 
   if (is.na(row_number)) {
     cli::cli_alert_info("Server version not in the DB")
@@ -35,9 +35,10 @@ audit_posit_version = function(server_version, type = c("connect", "workbench", 
   } else if (row_number > 1L) {
     newer_versions = versions[seq_len(row_number - 1), ]
     no_of_versions = length(unique(newer_versions$version)) #nolint
+    no_of_cves = sum(!is.na(newer_versions$cve))
     cli::cli_alert_info("Your server is {cli::col_red('out of date')}")
     cli::cli_alert_info("There are {cli::col_red(no_of_versions)} newer versions that fix \\
-                      {cli::col_red(nrow(newer_versions))} CVEs")
+                      {cli::col_red(no_of_cves)} CVEs")
   } else {
     cli::cli_alert_info("Your server is up to date")
   }

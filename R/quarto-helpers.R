@@ -20,7 +20,7 @@ get_quarto_sys_deps = function(out) {
   sys_deps = out$sys_deps
   sys_deps %>%
     dplyr::group_by(.data$sys_libs) %>%
-    dplyr::reframe(pkg = paste(sort(.data$r_pkg_names), collapse = ", "),
+    dplyr::reframe(pkg = paste(sort(.data$pkg), collapse = ", "),
                    n = length(.data$sys_libs))
 }
 
@@ -30,7 +30,7 @@ get_quarto_software_versions = function(out) {
   software = out$versions
   software = dplyr::select(software, "software", "version", "installed_version", "upgrade")
   software$installed_version = ifelse(is.na(software$installed_version),
-                                      "-", software$installed_version)
+                                      "Not installed", software$installed_version)
   software
 }
 
@@ -44,26 +44,23 @@ get_quarto_deploy = function(out) {
 }
 
 #' @rdname get_quarto_server_header
-#' @param versions A tibble with server versions
-#'
-#' @details
-#' The server versions are available as get_connect_versions()
-#' or get_workbench_versions()
-#'
+#' @inheritParams audit_posit_version
 #' @export
-get_quarto_server_version_msg = function(out,
-                                         versions) {
-  server_version = out$server_version
-  row_number = lookup_version(versions, server_version)
+get_quarto_posit_version_msg = function(out, type = c("connect", "workbench", "drivers")) {
+  posit_version = out$posit_version
+  row_number = lookup_version(posit_version, type)
   if (is.na(row_number)) {
-    "Your server version isn't in our database.
+    msg = "This Posit version (v{posit_version}), isn't in our database.
     This could be because we've missed it or it's really old."
   } else if (row_number > 1L) {
+    versions = get_posit_versions(type = type)
     newer_versions = versions[seq_len(row_number - 1), ]
     no_of_versions = length(unique(versions$version)) #nolint
-    glue::glue("Your Posit product is out of date.
-             There are {no_of_versions} newer versions that fix {nrow(newer_versions)} CVEs")
+    msg = "Your Posit product is out of date (v{posit_version}).
+             There are {no_of_versions} newer versions that fix {nrow(newer_versions)} CVEs.
+             The latest vesion is v{versions[1, 1]}"
   } else {
-    "Posit is up to date"
+    msg = "Your Posit product is up to date."
   }
+  glue::glue(msg)
 }
