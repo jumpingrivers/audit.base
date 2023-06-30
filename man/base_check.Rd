@@ -25,6 +25,8 @@ Shouldn't be used directly
 
 \item{\code{context}}{Human readable string}
 
+\item{\code{long}}{A long description of the test}
+
 \item{\code{account}}{Account name}
 }
 \if{html}{\out{</div>}}
