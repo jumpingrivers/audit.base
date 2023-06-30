@@ -6,6 +6,7 @@
 #' @field group Field for grouping tests
 #' @field short Use in config.yml
 #' @field context Human readable string
+#' @field long A long description of the test
 #' @field account Account name
 #' @export
 base_check = R6::R6Class(
@@ -15,6 +16,7 @@ base_check = R6::R6Class(
     context = NA,
     group = NA,
     short = NA,
+    long = NA_character_,
     account = NA,
     #' @description Set parameters for config file location
     #' @param dir directory location of the the config file
@@ -30,10 +32,12 @@ base_check = R6::R6Class(
       if (is.na(private$group)) stop("Missing group")
       if (is.na(private$context)) stop("Missing context")
       if (is.na(private$short)) stop("Missing short")
+      if (is.na(private$long)) stop("Missing long description")
 
       c("group" = private$group,
         "short" = private$short,
-        "context" = private$context)
+        "context" = private$context,
+        "long" = private$long)
     }
   ),
   private = list(

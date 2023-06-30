@@ -1,3 +1,6 @@
+# audit.base 0.6.0 _2023-06-30_
+- feat: Add `long` entry for better test description
+
 # audit.base 0.5.0 _2023-06-21_
 - feat: Use RSPM API for sys deps
 - feat: Move OS querying code to {audit.base}

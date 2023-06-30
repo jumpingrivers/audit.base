@@ -19,6 +19,7 @@ logger = R6::R6Class(
       private$log = dplyr::tibble(group = private$group,
                                   short = private$short,
                                   context = private$context,
+                                  long = private$long,
                                   passed = passed,
                                   time_taken = round(time_taken, 2))
 
