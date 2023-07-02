@@ -15,7 +15,7 @@
 #' * force: overwrite existing file
 #' * error: if a config file exists, raise an error
 #' @export
-create_config = function(file, init_r6_checks, pkg_name) {
+create_config = function(file, pkg_name) {
   # Return a function - allows unique config names
   function(dir = ".", default = TRUE, type = c("merge", "force", "error")) {
     type = match.arg(type)

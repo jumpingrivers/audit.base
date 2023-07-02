@@ -4,14 +4,14 @@
 \alias{create_config}
 \title{Create test config}
 \usage{
-create_config(file, init_r6_checks, pkg_name)
+create_config(file, pkg_name)
 }
 \arguments{
 \item{file}{Config file name}
 
-\item{init_r6_checks}{A vector of r6 objects.}
-
 \item{pkg_name}{E.g. jrHealthCheckConnect description}
+
+\item{init_r6_checks}{A vector of r6 objects.}
 }
 \description{
 This function creates an example config. By default all tests are TRUE.
