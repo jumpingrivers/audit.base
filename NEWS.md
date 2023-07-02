@@ -1,3 +1,7 @@
+# audit.base 0.6.1 _2023-07-02_
+- fix: `create_config()` bug
+- fix: Typo in quarto output
+
 # audit.base 0.6.0 _2023-06-30_
 - feat: Add `long` entry for better test description
 
