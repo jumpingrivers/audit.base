@@ -5,7 +5,6 @@
 #'
 #' @param file Config file name
 #' @inheritParams init_r6_check
-#' @param init_r6_checks A vector of r6 objects.
 #' @details If a test is missing from the config file, it is assume to be TRUE.
 #' Therefore, the config file can be quite short and just list exceptions.
 #' If the config file is missing, then all tests are carried out.
@@ -15,7 +14,7 @@
 #' * force: overwrite existing file
 #' * error: if a config file exists, raise an error
 #' @export
-create_config = function(file, init_r6_checks, pkg_name) {
+create_config = function(file, pkg_name) {
   # Return a function - allows unique config names
   function(dir = ".", default = TRUE, type = c("merge", "force", "error")) {
     type = match.arg(type)

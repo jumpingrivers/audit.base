@@ -59,7 +59,7 @@ get_quarto_posit_version_msg = function(out, type = c("connect", "workbench", "d
     no_of_versions = length(unique(versions$version)) #nolint
     msg = "Your Posit product is out of date (v{posit_version}).
              There are {no_of_versions} newer versions that fix {nrow(newer_versions)} CVEs.
-             The latest vesion is v{versions[1, 1]}"
+             The latest version is v{versions[1, 1]}."
   } else {
     msg = "Your Posit product is up to date."
   }
