@@ -5,7 +5,6 @@
 #'
 #' @param file Config file name
 #' @inheritParams init_r6_check
-#' @param init_r6_checks A vector of r6 objects.
 #' @details If a test is missing from the config file, it is assume to be TRUE.
 #' Therefore, the config file can be quite short and just list exceptions.
 #' If the config file is missing, then all tests are carried out.

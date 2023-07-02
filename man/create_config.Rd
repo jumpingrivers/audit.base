@@ -10,8 +10,6 @@ create_config(file, pkg_name)
 \item{file}{Config file name}
 
 \item{pkg_name}{E.g. jrHealthCheckConnect description}
-
-\item{init_r6_checks}{A vector of r6 objects.}
 }
 \description{
 This function creates an example config. By default all tests are TRUE.
