@@ -1,3 +1,6 @@
+# audit.base 0.6.2 _2023-07-05_
+- feat: Improve wording of posit versions
+
 # audit.base 0.6.1 _2023-07-02_
 - fix: `create_config()` bug
 - fix: Typo in quarto output
