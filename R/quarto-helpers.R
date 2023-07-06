@@ -51,17 +51,17 @@ get_quarto_posit_version_msg = function(out, type = c("connect", "workbench", "d
   posit_version = out$posit_version
   row_number = lookup_version(posit_version, type)
   if (is.na(row_number)) {
-    msg = "This Posit version (v{posit_version}), isn't in our database.
+    msg = "Posit {type} (v{posit_version}), isn't in our database.
     This could be because we've missed it or it's really old."
   } else if (row_number > 1L) {
     versions = get_posit_versions(type = type)
     newer_versions = versions[seq_len(row_number - 1), ] #nolint
     no_of_versions = length(unique(versions$version)) #nolint
-    msg = "Your Posit product is out of date (v{posit_version}).
+    msg = "Posit {type} is out of date (v{posit_version}).
              There are {no_of_versions} newer versions that fix {nrow(newer_versions)} CVEs.
              The latest version is v{versions[1, 1]}."
   } else {
-    msg = "Your Posit product is up to date."
+    msg = "Posit {type} is up to date."
   }
   glue::glue(msg)
 }
