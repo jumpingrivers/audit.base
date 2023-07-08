@@ -9,7 +9,7 @@ create_config(file, pkg_name)
 \arguments{
 \item{file}{Config file name}
 
-\item{pkg_name}{E.g. jrHealthCheckConnect description}
+\item{pkg_name}{E.g. uat.base description}
 }
 \description{
 This function creates an example config. By default all tests are TRUE.

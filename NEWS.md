@@ -1,3 +1,6 @@
+# audit.base 0.6.3 _2023-07-08_
+- feat: Adding initial unit test
+
 # audit.base 0.6.2 _2023-07-05_
 - feat: Improve wording of posit versions
 

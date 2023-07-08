@@ -7,14 +7,14 @@
 \usage{
 init_r6_checks(dir, file, pkg_name)
 
-init_r6_check(export, dir, file)
+init_r6_check(export, dir, file, pkg_name)
 }
 \arguments{
 \item{dir}{Directory of the config file}
 
 \item{file}{Config file name}
 
-\item{pkg_name}{E.g. jrHealthCheckConnect description}
+\item{pkg_name}{E.g. uat.base description}
 
 \item{export}{Name of the R6 class to initialise}
 }

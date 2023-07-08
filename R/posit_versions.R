@@ -29,18 +29,15 @@ audit_posit_version = function(posit_version, type = c("connect", "workbench", "
   versions = get_posit_versions(type = type)
   row_number = lookup_version(posit_version, type = type)
 
-  if (is.na(row_number)) {
-    cli::cli_alert_info("Server version not in the DB")
-    cli::cli_alert_info("Please report.")
-  } else if (row_number > 1L) {
+  if (is.na(row_number) || row_number > 1L) {
     newer_versions = versions[seq_len(row_number - 1), ]
     no_of_versions = length(unique(newer_versions$version)) #nolint
     no_of_cves = sum(!is.na(newer_versions$cve)) #nolint
-    cli::cli_alert_info("Your server is {cli::col_red('out of date')}")
+    cli::cli_alert_info("Posit {type} is {cli::col_red('out of date')}")
     cli::cli_alert_info("There are {cli::col_red(no_of_versions)} newer versions that fix \\
                       {cli::col_red(no_of_cves)} CVEs")
   } else {
-    cli::cli_alert_info("Your server is up to date")
+    cli::cli_alert_info("Post {type} is up to date")
   }
   return(invisible(NULL))
 }
@@ -50,7 +47,7 @@ lookup_version = function(server_version, type) {
   version_as_date = version_to_date(server_version)
   if (is.na(version_as_date) || version_as_date < min(versions$date)) {
     # Older than DB
-    row_number = nrow(versions) + 1
+    row_number = NA_integer_
   } else if (version_as_date > max(versions$date)) {
     # Newer than DB
     row_number = 1L
