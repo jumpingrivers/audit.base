@@ -17,16 +17,23 @@ test_that("Testing software versions", {
   augmented = augmented[!is.na(augmented$installed_version), ]
   expect_equal(augmented$installed_patch, c(3, 3, 1))
 
-  # Test really old versions
-  installed = tibble::tibble(software = c("r"),
-                             installed_version = c("1.5.3"))
+  # Test really old versions: Upgrade old version
+  installed = tibble::tibble(software = "r", installed_version = "1.5.3")
   augmented = augment_installed(installed)
   expect_equal(sum(augmented$upgrade), 10)
 
-  # Test version that's not
-  installed = tibble::tibble(software = c("r"),
-                             installed_version = c("99.4.3"))
-
+  # Test version not in DB - don't upgrade
+  installed = tibble::tibble(software = "r", installed_version = "99.4.3")
   augmented = augment_installed(installed)
   expect_equal(sum(augmented$upgrade), 9)
+})
+
+test_that("Testing software versions quarto output", {
+  installed = tibble::tibble(software = c("r", "r", "python"),
+                             installed_version = c("3.4.3", "3.5.3", "3.7.1"))
+  augmented = suppressMessages(augment_installed(installed))
+  out = list(versions = augmented)
+  q = get_quarto_software_versions(out)
+  expect_equal(colnames(q), c("software", "version", "installed_version", "upgrade"))
+  expect_true(all(is.logical(q$upgrade)))
 })

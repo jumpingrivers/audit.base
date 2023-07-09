@@ -30,48 +30,52 @@ get_major = function(v) as.numeric(unlist(stringr::str_match(v, "^([0-9]*\\.[0-9
 get_patch = function(v) as.numeric(unlist(stringr::str_match(v, "\\.([0-9]*)$")[, 2]))
 
 # Checks if versions are in the DB
-# Determines if they are too old or too new
 in_db = function(installed) {
-  installed_ages = get_latest_versions()  %>%
+  # latest/earliest versions stored in DB
+  software_range = get_latest_versions()  %>%
     dplyr::group_by(software) %>%
     dplyr::summarise(latest = max(major), earliest = min(major))
 
+  # Check installed packages are in software range
   installed %>%
-    dplyr::left_join(installed_ages) %>%
+    dplyr::left_join(software_range, by = c("software" = "software")) %>%
     dplyr::mutate(to_old = installed_major < earliest,
                   to_new = installed_major > latest) %>%
     dplyr::select(-latest, -earliest)
 }
 
 add_upgrade_column = function(installed) {
+  versions = versions_to_display(installed)
+  versions = versions %>%
+    dplyr::mutate(upgrade = .data$patch > .data$installed_patch | .data$to_old)  %>%
+    dplyr::mutate(upgrade = is.na(.data$upgrade) | .data$upgrade) %>%
+    dplyr::mutate(upgrade =
+                    dplyr::if_else(!is.na(.data$to_new) & .data$to_new, FALSE, .data$upgrade))
 
+
+  dplyr::select(versions, -to_old, -to_new)
+}
+
+versions_to_display = function(installed) {
   latest = get_latest_versions()
-  min_installed1 = latest %>%
+
+  min_installed = latest %>%
     dplyr::full_join(installed, by = c("software" = "software",
                                        "major" = "installed_major")) %>%
     dplyr::group_by(software, .drop = FALSE) %>%
     dplyr::filter(!is.na(.data$installed_version)) %>%
-    dplyr::summarise(installed_version_num =
-                       ifelse(any(to_old),
-                              max(version_num, 3, na.rm = TRUE),
-                     max(version_num, 3, na.rm = TRUE)))
+    dplyr::summarise(installed_version_num = max(version_num, 3, na.rm = TRUE))
 
   l = get_latest_versions() %>%
     dplyr::full_join(installed, by = c("software" = "software",
                                        "major" = "installed_major")) %>%
-
-
-
-    dplyr::full_join(min_installed1, by = c("software" = "software")) %>%
+    dplyr::full_join(min_installed, by = c("software" = "software")) %>%
     dplyr::group_by(software) %>%
-    dplyr::filter(version_num <= installed_version_num | is.na(version_num))
-
-  l %>%
-    dplyr::mutate(upgrade = .data$patch > .data$installed_patch | .data$to_old)  %>%
-    dplyr::mutate(upgrade = is.na(.data$upgrade) | .data$upgrade) %>%
-    dplyr::mutate(upgrade = dplyr::if_else(!is.na(.data$to_new) & .data$to_new , FALSE, .data$upgrade )) %>%
-    dplyr::select(-version_num, -installed_version_num, -to_old, -to_new)
+    dplyr::filter(version_num <= installed_version_num | is.na(version_num))  %>%
+    dplyr::select(-version_num, -installed_version_num)
+  l
 }
+
 
 get_latest_versions = function() {
   versions_fname = system.file("extdata", "versions", "software.csv",
