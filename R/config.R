@@ -33,6 +33,26 @@ create_config = function(file, pkg_name) {
     return(invisible(new_config))
   }
 }
+create_config_list = function(dir, file, default, pkg_name) {
+  obj_info = get_check_info(dir, file, pkg_name)
+  groups = unique(obj_info$group)
+  shorts = purrr::map(groups, ~obj_info[obj_info$group == .x, ]$short)
+  group_shorts = purrr::map(shorts, create_group_short, default = default)
+
+  names(group_shorts) = groups
+  group_shorts
+}
+
+get_check_info = function(dir, file, pkg_name) {
+  r6_inits = init_r6_checks(dir, file, pkg_name)
+  if (length(r6_inits) > 0L)
+    purrr::map_dfr(r6_inits, function(r6) c("class" = class(r6)[1], r6$info()))
+  else
+    tibble::tibble(class = character(0), group = character(0),
+                   short = character(0), context = character(0),
+                   long = character(0))
+}
+
 merge_configs = function(new, existing) {
   xnames = names(existing)
   for (v in names(new)) {
@@ -49,23 +69,9 @@ merge_configs = function(new, existing) {
   new
 }
 
-create_config_list = function(dir, file, default, pkg_name) {
-  obj_info = get_check_info(dir, file, pkg_name)
-  groups = unique(obj_info$group)
-  shorts = purrr::map(groups, ~obj_info[obj_info$group == .x, ]$short)
-  group_shorts = purrr::map(shorts, create_group_short, default = default)
-
-  names(group_shorts) = groups
-  group_shorts
-}
 
 create_group_short = function(short, default) {
   group_short = vector("list", length = length(short))
   names(group_short) = short
   purrr::map(group_short, ~default)
-}
-
-get_check_info = function(dir, file, pkg_name) {
-  r6_inits = init_r6_checks(dir, file, pkg_name)
-  purrr::map_dfr(r6_inits, function(r6) c("class" = class(r6)[1], r6$info()))
 }
