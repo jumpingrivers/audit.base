@@ -4,7 +4,8 @@
 #' @export
 augment_installed = function(installed, verbose = TRUE) {
   installed$installed_major = get_major(installed$installed_version)
-  installed$installed_point = get_point(installed$installed_version)
+  installed$installed_patch = get_patch(installed$installed_version)
+  installed = in_db(installed)
   installed = add_upgrade_column(installed)
   if (verbose) print_colour_versions(installed)
   installed
@@ -24,44 +25,68 @@ print_colour_versions = function(installed) {
 }
 
 # Returns X.Y from X.Y.Z
-get_major = function(v) as.character(unlist(stringr::str_match(v, "^([0-9]*\\.[0-9]*)")[, 2]))
+get_major = function(v) as.numeric(unlist(stringr::str_match(v, "^([0-9]*\\.[0-9]*)")[, 2]))
 # Returns Z - use numeric for comparisons
-get_point = function(v) as.numeric(unlist(stringr::str_match(v, "\\.([0-9]*)$")[, 2]))
+get_patch = function(v) as.numeric(unlist(stringr::str_match(v, "\\.([0-9]*)$")[, 2]))
+
+# Checks if versions are in the DB
+# Determines if they are too old or too new
+in_db = function(installed) {
+  installed_ages = get_latest_versions()  %>%
+    dplyr::group_by(software) %>%
+    dplyr::summarise(latest = max(major), earliest = min(major))
+
+  installed %>%
+    dplyr::left_join(installed_ages) %>%
+    dplyr::mutate(to_old = installed_major < earliest,
+                  to_new = installed_major > latest) %>%
+    dplyr::select(-latest, -earliest)
+}
 
 add_upgrade_column = function(installed) {
-  latest = get_latest_versions()
-  latest = truncate_versions(latest, installed)
 
-  dplyr::left_join(latest, installed,
-                   by = c("software" = "software", "major" = "installed_major")) %>%
-    dplyr::mutate(upgrade = .data$point > .data$installed_point) %>%
-    dplyr::mutate(upgrade = is.na(.data$upgrade) | .data$upgrade)
+  latest = get_latest_versions()
+  min_installed1 = latest %>%
+    dplyr::full_join(installed, by = c("software" = "software",
+                                       "major" = "installed_major")) %>%
+    dplyr::group_by(software, .drop = FALSE) %>%
+    dplyr::filter(!is.na(.data$installed_version)) %>%
+    dplyr::summarise(installed_version_num =
+                       ifelse(any(to_old),
+                              max(version_num, 3, na.rm = TRUE),
+                     max(version_num, 3, na.rm = TRUE)))
+
+  l = get_latest_versions() %>%
+    dplyr::full_join(installed, by = c("software" = "software",
+                                       "major" = "installed_major")) %>%
+
+
+
+    dplyr::full_join(min_installed1, by = c("software" = "software")) %>%
+    dplyr::group_by(software) %>%
+    dplyr::filter(version_num <= installed_version_num | is.na(version_num))
+
+  l %>%
+    dplyr::mutate(upgrade = .data$patch > .data$installed_patch | .data$to_old)  %>%
+    dplyr::mutate(upgrade = is.na(.data$upgrade) | .data$upgrade) %>%
+    dplyr::mutate(upgrade = dplyr::if_else(!is.na(.data$to_new) & .data$to_new , FALSE, .data$upgrade )) %>%
+    dplyr::select(-version_num, -installed_version_num, -to_old, -to_new)
 }
 
 get_latest_versions = function() {
-  versions = system.file("extdata", "versions", "software.csv",
-                         package = "audit.base",
-                         mustWork = TRUE)
-  versions = dplyr::as_tibble(utils::read.csv(versions, comment.char = "#"))
+  versions_fname = system.file("extdata", "versions", "software.csv",
+                               package = "audit.base",
+                               mustWork = TRUE)
+  versions = readr::read_csv(versions_fname, comment = "#", col_types = "fc")
   versions$major = get_major(versions$version)
-  versions$point = get_point(versions$version)
-  return(versions)
+  versions$patch = get_patch(versions$version)
+  # Add a version number.
+  # Latest version is always 1, oldest increases with new version
+  versions = versions %>%
+    dplyr::group_by(software) %>%
+    dplyr::mutate(version_num = length(major) - seq_along(major) + 1)
+  versions
 }
-
-# Determine the earliest version installed
-# Then discard all previous version from latest
-truncate_versions = function(latest, installed) {
-  min_installed = installed %>%
-    dplyr::group_by(.data$software) %>%
-    dplyr::summarise("min_major" = min(.data$installed_major))
-
-  truncated_latest = latest %>%
-    dplyr::left_join(min_installed, by = c("software" = "software")) %>%
-    dplyr::filter(.data$major >= .data$min_major | is.na(.data$min_major))
-
-  dplyr::select(truncated_latest, -"min_major")
-}
-
 colour_version = function(upgrade, installed) {
   if (is.na(upgrade) || isTRUE(upgrade)) {
     cli::col_red(installed)
