@@ -14,7 +14,7 @@ Inherited underlying base class.
 Shouldn't be used directly
 }
 \section{Super class}{
-\code{audit.base::logger} -> \code{base_check}
+\code{\link[audit.base:logger]{audit.base::logger}} -> \code{base_check}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
