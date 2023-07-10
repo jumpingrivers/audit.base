@@ -39,7 +39,7 @@ logger = R6::R6Class(
   )
 )
 
-msg_function = function(has_passed, msg) {
+msg_function = function(has_passed) {
   if (is.na(has_passed)) {
     cli::cli_alert_info("Check skipped")
   } else if (has_passed) {
