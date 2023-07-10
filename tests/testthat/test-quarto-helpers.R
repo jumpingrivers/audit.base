@@ -11,4 +11,11 @@ test_that("Quarto Outputs", {
   out$posit_version = get_posit_versions("connect")[1, ]$version
   msg = get_quarto_posit_version_msg(out, "connect")
   expect_true(stringr::str_detect(msg, "is up to date"))
+
+
+  out = list(server_headers = serverHeaders::check("example.com"))
+  q = get_quarto_server_header(out)
+  expect_equal(colnames(q), c("header", "status", "message", "value"))
+  expect_true(all(is.list(q$message)))
+  expect_true(nrow(q) >= 6)
 })
