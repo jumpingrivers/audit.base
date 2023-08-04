@@ -44,9 +44,9 @@ audit_posit_version = function(posit_version, type = c("connect", "workbench", "
   return(invisible(NULL))
 }
 
-lookup_version = function(server_version, type) {
+lookup_version = function(posit_version, type) {
   versions = get_posit_versions(type = type)
-  version_as_date = version_to_date(server_version)
+  version_as_date = version_to_date(posit_version)
   if (is.na(version_as_date) || version_as_date < min(versions$date)) {
     # Older than DB
     row_number = NA_integer_
@@ -57,8 +57,8 @@ lookup_version = function(server_version, type) {
     # Return matching version; multiple CVEs, so just pick 1
     # Rtns an NA when not in the DB
     # Some versions add on additional info, .e.g. 2023.06.0.pro1 - delete
-    server_version = stringr::str_extract(version, "^(202[0-9])\\.([01][0-9])\\.[0-9]")
-    row_number = which(versions$version == server_version)[1]
+    posit_version = stringr::str_extract(posit_version, "^(202[0-9])\\.([01][0-9])\\.[0-9]")
+    row_number = which(versions$version == posit_version)[1]
   }
   return(row_number)
 }
