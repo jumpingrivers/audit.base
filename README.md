@@ -5,3 +5,9 @@
   <!-- badges: end -->
   
 This package is used by {audit.connect} and {audit.workbench}.
+
+To install
+```r
+install.packages('audit.base', 
+    repos = c('https://jumpingrivers.r-universe.dev', 'https://cloud.r-project.org'))
+```

@@ -1,3 +1,6 @@
+# audit.base 0.6.5 _2023-08-05_
+- chore: Update software versions
+
 # audit.base 0.6.4 _2023-08-04_
 - feat: Further unit tests
 - fix: Software versions out with DB now handled
