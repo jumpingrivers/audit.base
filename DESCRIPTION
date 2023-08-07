@@ -1,7 +1,7 @@
 Type: Package
 Package: audit.base
 Title: Base package for Posit Checks
-Version: 0.6.5
+Version: 0.6.6
 Authors@R:
     person("Jumping", "Rivers", , "info@jumpingrivers.com", role = c("aut", "cre"))
 Description: Base package for sharing classes between posit audit
@@ -23,6 +23,7 @@ Imports:
     tibble,
     yaml
 Suggests: 
+    jsonlite,
     serverHeaders,
     testthat (>= 3.0.0)
 Remotes:

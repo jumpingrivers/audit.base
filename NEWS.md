@@ -1,3 +1,6 @@
+# audit.base 0.6.6 _2023-08-07_
+- feat: Use Posit API for latest R/Py/Quarto versions
+
 # audit.base 0.6.5 _2023-08-05_
 - chore: Update software versions
 
