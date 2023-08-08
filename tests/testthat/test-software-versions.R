@@ -11,7 +11,7 @@ test_that("Testing software versions", {
   expect_equal(colnames(augmented), c(v_colnames[1:4],
                                       paste0("installed_", c("version", "patch")),
                                       "upgrade"))
-  expect_equal(sum(!augmented$upgrade), 2)
+  expect_equal(sum(augmented$upgrade), 2)
 
   # Check specific packages
   augmented = augmented[!is.na(augmented$installed_version), ]
