@@ -11,7 +11,7 @@ test_that("Testing software versions", {
   expect_equal(colnames(augmented), c(v_colnames[1:4],
                                       paste0("installed_", c("version", "patch")),
                                       "upgrade"))
-  expect_equal(sum(!augmented$upgrade), 2)
+  expect_equal(sum(!augmented$upgrade), 1)
 
   # Check specific packages
   augmented = augmented[!is.na(augmented$installed_version), ]
@@ -36,4 +36,12 @@ test_that("Testing software versions quarto output", {
   q = get_quarto_software_versions(out)
   expect_equal(colnames(q), c("software", "version", "installed_version", "upgrade"))
   expect_true(all(is.logical(q$upgrade)))
+})
+
+test_that("Ensure that software versions are up to date", {
+  testthat::skip_on_ci()
+  versions = get_latest_versions()
+  latest = create_software_tibble()
+  # If this test files, try running update_software_csv() first
+  expect_true(all(latest$version %in% versions$version))
 })
