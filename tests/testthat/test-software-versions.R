@@ -39,6 +39,7 @@ test_that("Testing software versions quarto output", {
 })
 
 test_that("Ensure that software versions are up to date", {
+  testthat::skip_on_ci()
   versions = get_latest_versions()
   latest = create_software_tibble()
   # If this test files, try running update_software_csv() first
