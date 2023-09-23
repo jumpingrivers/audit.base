@@ -69,7 +69,6 @@ merge_configs = function(new, existing) {
   new
 }
 
-
 create_group_short = function(short, default) {
   group_short = vector("list", length = length(short))
   names(group_short) = short

@@ -10,11 +10,11 @@ r,4.0.5
 r,4.1.3
 r,4.2.3
 r,4.3.1
-python,3.10.12
-python,3.11.4
+python,3.10.13
+python,3.11.5
 python,3.7.17
-python,3.8.17
-python,3.9.17
+python,3.8.18
+python,3.9.18
 quarto,1.0.38
 quarto,1.1.189
 quarto,1.2.475

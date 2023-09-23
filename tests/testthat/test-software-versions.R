@@ -4,7 +4,6 @@ test_that("Testing software versions", {
   expect_equal(colnames(versions), v_colnames)
   expect_gte(nrow(versions), 16)
 
-
   installed = tibble::tibble(software = c("r", "r", "python"),
                              installed_version = c("3.4.3", "3.5.3", "3.7.1"))
   augmented = augment_installed(installed)
@@ -15,7 +14,7 @@ test_that("Testing software versions", {
 
   # Check specific packages
   augmented = augmented[!is.na(augmented$installed_version), ]
-  expect_equal(augmented$installed_patch, c(3, 3, 1))
+  expect_equal(augmented$installed_patch, c(1, 3, 3))
 
   # Test really old versions: Upgrade old version
   installed = tibble::tibble(software = "r", installed_version = "1.5.3")

@@ -17,7 +17,6 @@ test_that("Testing check server", {
   expect_message(audit_posit_version(paste0(latest_version, ".pro1"), type),
                  regexp = "up to date")
 
-
   # Version not in DB
   expect_equal(lookup_version(posit_version = "2029.01.01", type), 1)
   # Really old version not in the DB
