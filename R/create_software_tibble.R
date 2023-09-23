@@ -6,7 +6,7 @@
 update_software_csv = function() {
   software = create_software_tibble()
   readr::write_csv(software, file = "inst/extdata/versions/software.csv")
-  return(invisible(sofware))
+  return(invisible(software))
 }
 
 create_software_tibble = function() {
@@ -14,7 +14,6 @@ create_software_tibble = function() {
   py = get_latest_versions_from_posit("python")
   q = jsonlite::read_json("https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest")
   quarto = c("1.0.38", "1.1.189", "1.2.475", stringr::str_remove(q$name, "^v"))
-
 
   tibble::tibble(software = rep(c("r", "python", "quarto"),
                                 c(length(r), length(py), length(quarto))),

@@ -1,3 +1,6 @@
+# audit.base 0.6.8 _2023-09-23_
+- feat: Improved cli of software versions
+
 # audit.base 0.6.7 _2023-09-23_
 - fix: check_install_libs() didn't parse libs correctly
 
