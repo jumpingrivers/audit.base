@@ -7,10 +7,10 @@ is_redhat = function(os_release_df) {
   os_name = os_release_df[os_release_df$name == "name", ]$value
   stringr::str_detect(os_name, pattern = "red hat")
 }
-get_os_release_df = function() {
+
+get_os_release = function() {
   os_release = readr::read_lines("/etc/os-release")
-  os_release_df = os_release_to_df(os_release)
-  os_release_df
+  os_release
 }
 
 os_release_to_df = function(os_release) {

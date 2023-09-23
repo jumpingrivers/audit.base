@@ -1,3 +1,6 @@
+# audit.base 0.6.7 _2023-09-23_
+- fix: check_install_libs() didn't parse libs correctly
+
 # audit.base 0.6.6 _2023-08-07_
 - feat: Use Posit API for latest R/Py/Quarto versions
 
