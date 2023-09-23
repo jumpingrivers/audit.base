@@ -4,7 +4,8 @@
 #' This check, obtains a list of system libraries installed on the connect server, then
 #' determines which R packages can't be installed.
 #' @param os_release Output from /etc/os-release
-#' @param installed_libs Output get_installed_libs()
+#' @param installed_libs A vector of packages, e.g. output apt list --installed, or
+#' `get_installed_libs()`
 #' @param debug_level Integer - 0, 1, 2
 #' @details Suppress parameter will be changed in a near-future MR to verbose levels
 #' @export
@@ -34,7 +35,6 @@ get_os_sys_deps = function(os_release) {
   version_id = os_release_df[os_release_df$name == "version_id", ]$value
   if (is_ubuntu(os_release_df)) {
     id = "ubuntu"
-
   } else if (is_redhat(os_release_df)) {
     id = "redhat"
     version_id = stringr::str_remove(version_id, "\\..*")
@@ -52,17 +52,33 @@ get_os_sys_deps = function(os_release) {
 #' are installed on a machine.
 #' @export
 get_installed_libs = function() {
-  os_release_df = get_os_release_df()
+  os_release = get_os_release()
+  os_release_df = os_release_to_df(os_release)
   if (is_ubuntu(os_release_df)) {
     libs = processx::run("apt", args = c("list", "--installed"))
     libs = stringr::str_split(libs$stdout, "\n")[[1]][-1]
-    libs = stringr::str_match(libs, "^[^/]*")[, 1]
   } else if (is_redhat(os_release_df)) {
     libs = processx::run("yum", args = c("list", "installed"))$stdout
     libs = stringr::str_split(libs, "\n")[[1]][-(1:2)]
+  } else {
+    cli::cli_abort("We don't support this OS yet")
+  }
+  libs = clean_libs(os_release, libs)
+  return(libs)
+}
+
+#' @export
+#' @inheritParams check_sys_deps
+#' @param libs A vector of installed sys deps
+#' @rdname get_installed_libs
+clean_libs = function(os_release, libs) {
+  os_release_df = os_release_to_df(os_release)
+  if (is_ubuntu(os_release_df)) {
+    libs = stringr::str_match(libs, "^[^/]*")[, 1]
+  } else if (is_redhat(os_release_df)) {
     libs = stringr::str_match(libs, "^[^\\.]*")[, 1]
   } else {
     cli::cli_abort("We don't support this OS yet")
   }
-  return(libs)
+  return(sort(libs))
 }

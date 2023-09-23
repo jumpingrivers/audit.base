@@ -9,7 +9,8 @@ check_sys_deps(os_release, installed_libs, debug_level = 0:2)
 \arguments{
 \item{os_release}{Output from /etc/os-release}
 
-\item{installed_libs}{Output get_installed_libs()}
+\item{installed_libs}{A vector of packages, e.g. output apt list --installed, or
+`get_installed_libs()`}
 
 \item{debug_level}{Integer - 0, 1, 2}
 }
