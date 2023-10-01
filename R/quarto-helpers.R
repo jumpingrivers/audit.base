@@ -5,10 +5,11 @@
 #' @export
 get_quarto_server_header = function(out) {
   headers = out$server_headers$headers
+  headers = dplyr::bind_rows(headers, get_posit_headers(headers))
   headers = dplyr::filter(headers, .data$primary_header)
   headers = dplyr::arrange(headers, dplyr::desc(.data$status)) %>%
     dplyr::mutate(
-      header_docs = purrr::map(.data$documentation, ~ htmltools::a(href = .x, "(docs)")),
+      header_docs = purrr::map(.data$documentation, ~htmltools::a(href = .x, "(docs)")),
       message = purrr::map2(message, .data$header_docs,
                             ~ gt::html(paste(.x, as.character(.y))))) %>%
     dplyr::mutate(value = ifelse(is.na(.data$value), "-", .data$value))
