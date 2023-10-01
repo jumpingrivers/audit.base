@@ -8,7 +8,7 @@ augment_installed = function(installed, verbose = TRUE) {
   installed = in_db(installed)
   installed = add_upgrade_column(installed)
   installed$major = package_version(installed$major)
-  installed = dplyr::arrange(installed, software, dplyr::desc(major))
+  installed = dplyr::arrange(installed, .data$software, dplyr::desc(.data$major))
   if (verbose) print_colour_versions(installed)
   installed
 }

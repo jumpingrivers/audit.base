@@ -1,3 +1,6 @@
+# audit.base 0.6.9 _2023-09-30_
+- feat: Check if `server` contains `Posit`
+
 # audit.base 0.6.8 _2023-09-23_
 - feat: Improved cli of software versions
 
