@@ -29,11 +29,11 @@ get_latest_versions_from_posit = function(type = c("r", "python")) {
   url = glue::glue("https://cdn.posit.co/{type}/versions.json")
   versions = unlist(jsonlite::read_json(url))
   versions = unname(versions)
-  tibble::tibble(patch = get_patch(versions), major = get_major(versions), versions = versions) |>
-    dplyr::filter(!is.na(.data$patch)) |>
-    dplyr::arrange(.data$major, -.data$patch) |>
-    dplyr::group_by(.data$major) |>
-    dplyr::mutate(patch = max(.data$patch))  |>
-    dplyr::slice(1) |>
+  tibble::tibble(patch = get_patch(versions), major = get_major(versions), versions = versions) %>%
+    dplyr::filter(!is.na(.data$patch)) %>%
+    dplyr::arrange(.data$major, -.data$patch) %>%
+    dplyr::group_by(.data$major) %>%
+    dplyr::mutate(patch = max(.data$patch))  %>%
+    dplyr::slice(1) %>%
     dplyr::pull(versions)
 }

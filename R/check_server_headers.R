@@ -13,9 +13,9 @@ check_server_headers = function(server) {
 
 # Detects if we are leaking server header information
 get_posit_headers = function(headers) {
-  posit_header = headers |>
+  posit_header = headers %>%
     dplyr::filter(.data$header == "server" &
-                    stringr::str_detect(.data$message, "[p|P]osit")) |>
+                    stringr::str_detect(.data$message, "[p|P]osit")) %>%
     dplyr::mutate(documentation = "https://developer.mozilla.org/docs/Web/HTTP/Headers/Server",
                   primary_header = TRUE,
                   status = "WARN")
