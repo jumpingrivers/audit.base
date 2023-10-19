@@ -1,3 +1,7 @@
+# audit.base 0.6.10 _2023-10-19_
+- fix: Add {serverHeaders} to Imports
+- feat: Update software versions
+
 # audit.base 0.6.9 _2023-09-30_
 - feat: Check if `server` contains `Posit`
 
