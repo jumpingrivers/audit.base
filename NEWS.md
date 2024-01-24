@@ -1,3 +1,6 @@
+# audit.base 0.6.11 _2024-01-24_
+- fix: Return distinct server headers
+
 # audit.base 0.6.10 _2023-10-19_
 - fix: Add {serverHeaders} to Imports
 - feat: Update software versions
