@@ -22,8 +22,8 @@ create_software_tibble = function() {
                  version = c(r, py, quarto))
   # Use package_version to get better sorting
   software_tibble %>%
-    dplyr::mutate(tmp_version = package_version(version)) %>%
-    dplyr::arrange(software, dplyr::desc(tmp_version)) %>%
+    dplyr::mutate(tmp_version = package_version(.data$version)) %>%
+    dplyr::arrange(.data$software, dplyr::desc(.data$tmp_version)) %>%
     dplyr::select(-"tmp_version")
 }
 

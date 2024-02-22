@@ -1,3 +1,6 @@
+# audit.base 0.6.12 _2024-02-22_
+- fix: Update software version numbers
+
 # audit.base 0.6.11 _2024-01-24_
 - fix: Return distinct server headers
 
