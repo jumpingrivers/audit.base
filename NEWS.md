@@ -1,3 +1,6 @@
+# audit.base 0.6.14 _2024-04-04_
+- fix: Improve feedback when checking sys deps
+
 # audit.base 0.6.13 _2024-03-27_
 - fix: Update software version numbers
 
