@@ -24,10 +24,11 @@ print_colour_versions = function(installed) {
 }
 
 print_colour_version = function(row) {
-  software_name = glue::glue("{stringr::str_to_title(row$software)} v{row$major}")
-  latest_version = glue::glue("latest v{row$version}")
+  major = if ("major" %in% colnames(row)) paste0(" v", row$major) else ""
+  software_name = glue::glue("{stringr::str_to_title(row$software)}{major}")
+  latest_version = glue::glue("v{row$version}")
   if (is.na(row$installed_version)) {
-    cli::cli_alert_danger("{software_name}: {latest_version} not installed")
+    cli::cli_alert_danger("{software_name}: latest {latest_version} not installed")
     return(invisible(NULL))
   }
 

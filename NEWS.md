@@ -1,6 +1,7 @@
 # audit.base 0.6.15 _2024-06-06_
 - feat: Add support for Centos
 - fix: Update software version numbers
+- fix: Fix output for Posit drivers
 
 # audit.base 0.6.14 _2024-04-04_
 - fix: Improve feedback when checking sys deps
