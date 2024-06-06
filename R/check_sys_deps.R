@@ -77,7 +77,7 @@ clean_libs = function(os_release, libs) {
   os_release_df = os_release_to_df(os_release)
   if (is_ubuntu(os_release_df)) {
     libs = stringr::str_match(libs, "^[^/]*")[, 1]
-  } else if (is_redhat(os_release_df) || is_centos(os_release)) {
+  } else if (is_redhat(os_release_df) || is_centos(os_release_df)) {
     libs = stringr::str_match(libs, "^[^\\.]*")[, 1]
   } else {
     cli::cli_abort("We don't support this OS yet")
