@@ -1,6 +1,6 @@
 #' Augments installed software columns
 #' @param installed A tibble with columns software and installed_version
-#' @param verbose Default TRUE. Out a {cli} summary
+#' @param verbose Default TRUE.
 #' @export
 augment_installed = function(installed, verbose = TRUE) {
   installed$installed_major = get_major(installed$installed_version)

@@ -12,7 +12,7 @@ print_colour_versions(installed)
 \arguments{
 \item{installed}{A tibble with columns software and installed_version}
 
-\item{verbose}{Default TRUE. Out a {cli} summary}
+\item{verbose}{Default TRUE.}
 }
 \description{
 Augments installed software columns

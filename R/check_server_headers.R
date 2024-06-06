@@ -1,6 +1,6 @@
 #' Check server headers
 #'
-#' In addition to the checks made by {serverHeaders} we also check
+#' In addition to the checks made by serverHeaders we also check
 #' that Posit isn't in one of the headers.
 #' @param server URL of server
 #' @export
