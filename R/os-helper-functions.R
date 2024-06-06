@@ -8,6 +8,11 @@ is_redhat = function(os_release_df) {
   stringr::str_detect(os_name, pattern = "red hat")
 }
 
+is_centos = function(os_release_df) {
+  os_name = os_release_df[os_release_df$name == "name", ]$value
+  stringr::str_detect(os_name, pattern = "centos")
+}
+
 get_os_release = function() {
   os_release = readr::read_lines("/etc/os-release")
   os_release

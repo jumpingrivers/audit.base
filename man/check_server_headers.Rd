@@ -10,6 +10,6 @@ check_server_headers(server)
 \item{server}{URL of server}
 }
 \description{
-In addition to the checks made by {serverHeaders} we also check
+In addition to the checks made by serverHeaders we also check
 that Posit isn't in one of the headers.
 }
