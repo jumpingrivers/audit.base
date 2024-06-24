@@ -13,7 +13,7 @@ get_posit_versions = function(type = c("connect", "workbench", "drivers")) {
     mustWork = TRUE, package = "audit.base"
   )
   versions = readr::read_csv(fname, comment = "#", col_types = c("c", "c"))
-  versions = dplyr::arrange(versions, dplyr::desc(name))
+  versions = dplyr::arrange(versions, dplyr::desc(.data$version))
   return(versions)
 }
 
@@ -45,13 +45,17 @@ audit_posit_version = function(posit_version, type = c("connect", "workbench", "
   return(invisible(NULL))
 }
 
+
+
 lookup_version = function(posit_version, type) {
   versions = get_posit_versions(type = type)
   version_as_date = version_to_date(posit_version)
-  if (is.na(version_as_date) || version_as_date < min(versions$date)) {
+  all_dates = unlist(purrr::map(versions$version, version_to_date))
+
+  if (is.na(version_as_date) || version_as_date < min(all_dates)) {
     # Older than DB
     row_number = NA_integer_
-  } else if (version_as_date > max(versions$date)) {
+  } else if (version_as_date > max(all_dates)) {
     # Newer than DB
     row_number = 1L
   } else {

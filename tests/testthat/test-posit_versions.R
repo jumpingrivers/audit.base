@@ -39,3 +39,17 @@ test_that("Testing check server", {
     regexp = "out of date"
   )
 })
+
+test_that("Testing check Posit versions", {
+  type = "connect"
+  remote = get_posit_remote_versions(type)
+  local = get_posit_versions(type)
+  expect_true(all(remote$version %in% local$version), 
+    info = "Try running update_all_versions()")
+  type = "workbench"
+  remote = get_posit_remote_versions(type)
+  local = get_posit_versions(type)
+  expect_true(all(remote$version %in% local$version), 
+    info = "Try running update_all_versions()")
+}
+)
