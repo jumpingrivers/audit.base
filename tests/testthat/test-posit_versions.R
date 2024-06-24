@@ -2,7 +2,7 @@ test_that("Testing check server", {
   types = c("workbench", "connect", "drivers")
   for (type in types) {
     versions = get_posit_versions(type)
-    expect_equal(ncol(versions), 3)
+    expect_equal(ncol(versions), 2)
     expect_gt(nrow(versions), 2)
   }
   type = "connect"

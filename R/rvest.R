@@ -36,7 +36,7 @@ get_all_versions = function(page) {
   tibble::tibble(name = v[!is.na(v)], cve = "")
 }
 
-update_posit_versions = function() {
+update_posit_csv = function() {
   readr::write_csv(extract_cves("https://docs.posit.co/connect/news/"), 
     file = "inst/extdata/versions/connect.csv")
 
