@@ -17,9 +17,13 @@ create_software_tibble = function() {
   q = jsonlite::read_json("https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest")
   quarto = c("1.0.38", "1.1.189", "1.2.475", stringr::str_remove(q$name, "^v"))
 
-  software_tibble = tibble::tibble(software = rep(c("r", "python", "quarto"),
-                                c(length(r), length(py), length(quarto))),
-                 version = c(r, py, quarto))
+  software_tibble = tibble::tibble(
+    software = rep(
+      c("r", "python", "quarto"),
+      c(length(r), length(py), length(quarto))
+    ),
+    version = c(r, py, quarto)
+  )
   # Use package_version to get better sorting
   software_tibble %>%
     dplyr::mutate(tmp_version = package_version(.data$version)) %>%
@@ -40,7 +44,7 @@ get_latest_versions_from_posit = function(type = c("r", "python")) {
     dplyr::filter(!is.na(.data$patch)) %>%
     dplyr::arrange(.data$major, -.data$patch) %>%
     dplyr::group_by(.data$major) %>%
-    dplyr::mutate(patch = max(.data$patch))  %>%
+    dplyr::mutate(patch = max(.data$patch)) %>%
     dplyr::slice(1) %>%
     dplyr::pull(versions)
 }

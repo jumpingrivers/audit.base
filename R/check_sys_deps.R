@@ -22,7 +22,7 @@ check_sys_deps = function(os_release, installed_libs, debug_level = 0:2) {
   cli::cli_alert_info("Unable to install {nrow(missing_libs)} CRAN packages")
 
   if (nrow(missing_libs) > 0) {
-    sys_libs = unique(missing_libs$sys_libs) #nolint
+    sys_libs = unique(missing_libs$sys_libs) # nolint
     cli::cli_alert_info("Missing sys_libs: {sys_libs}")
     cli::cli_alert_info("Note: this is not necessarily a bad thing")
   }

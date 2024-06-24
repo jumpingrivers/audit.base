@@ -11,7 +11,7 @@ init_r6_checks = function(dir, file, pkg_name) {
   exports = getNamespaceExports(pkg_name)
   check_exports = sort(exports[stringr::str_starts(exports, "check_")])
   r6_inits = purrr::map(check_exports, init_r6_check, dir = dir, file = file, pkg_name)
-  purrr::discard(r6_inits, ~is.null(.x))
+  purrr::discard(r6_inits, ~ is.null(.x))
 }
 
 #' @rdname init_r6_checks

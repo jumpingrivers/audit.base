@@ -34,10 +34,12 @@ base_check = R6::R6Class(
       if (is.na(private$short)) stop("Missing short")
       if (is.na(private$long)) stop("Missing long description")
 
-      c("group" = private$group,
+      c(
+        "group" = private$group,
         "short" = private$short,
         "context" = private$context,
-        "long" = private$long)
+        "long" = private$long
+      )
     }
   ),
   private = list(
@@ -47,10 +49,14 @@ base_check = R6::R6Class(
     # Assume TRUE, unless explicitly FALSE
     skip_test = function() {
       config_path = file.path(private$dir, private$file)
-      if (!file.exists(config_path)) return(FALSE)
+      if (!file.exists(config_path)) {
+        return(FALSE)
+      }
       config = yaml::read_yaml(config_path)
 
-      if (!(private$group %in% names(config))) return(FALSE)
+      if (!(private$group %in% names(config))) {
+        return(FALSE)
+      }
       group = config[[private$group]]
       return(isFALSE(group[[private$short]]))
     },

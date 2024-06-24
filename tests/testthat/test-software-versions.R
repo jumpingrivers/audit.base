@@ -4,12 +4,16 @@ test_that("Testing software versions", {
   expect_equal(colnames(versions), v_colnames)
   expect_gte(nrow(versions), 16)
 
-  installed = tibble::tibble(software = c("r", "r", "python"),
-                             installed_version = c("3.4.3", "3.5.3", "3.7.1"))
+  installed = tibble::tibble(
+    software = c("r", "r", "python"),
+    installed_version = c("3.4.3", "3.5.3", "3.7.1")
+  )
   augmented = augment_installed(installed)
-  expect_equal(colnames(augmented), c(v_colnames[1:4],
-                                      paste0("installed_", c("version", "patch")),
-                                      "upgrade"))
+  expect_equal(colnames(augmented), c(
+    v_colnames[1:4],
+    paste0("installed_", c("version", "patch")),
+    "upgrade"
+  ))
   expect_equal(sum(!augmented$upgrade), 1)
 
   # Check specific packages
@@ -28,8 +32,10 @@ test_that("Testing software versions", {
 })
 
 test_that("Testing software versions quarto output", {
-  installed = tibble::tibble(software = c("r", "r", "python"),
-                             installed_version = c("3.4.3", "3.5.3", "3.7.1"))
+  installed = tibble::tibble(
+    software = c("r", "r", "python"),
+    installed_version = c("3.4.3", "3.5.3", "3.7.1")
+  )
   augmented = suppressMessages(augment_installed(installed))
   out = list(versions = augmented)
   q = get_quarto_software_versions(out)
