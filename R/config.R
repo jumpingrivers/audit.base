@@ -36,7 +36,7 @@ create_config = function(file, pkg_name) {
 create_config_list = function(dir, file, default, pkg_name) {
   obj_info = get_check_info(dir, file, pkg_name)
   groups = unique(obj_info$group)
-  shorts = purrr::map(groups, ~obj_info[obj_info$group == .x, ]$short)
+  shorts = purrr::map(groups, ~ obj_info[obj_info$group == .x, ]$short)
   group_shorts = purrr::map(shorts, create_group_short, default = default)
 
   names(group_shorts) = groups
@@ -45,24 +45,27 @@ create_config_list = function(dir, file, default, pkg_name) {
 
 get_check_info = function(dir, file, pkg_name) {
   r6_inits = init_r6_checks(dir, file, pkg_name)
-  if (length(r6_inits) > 0L)
+  if (length(r6_inits) > 0L) {
     purrr::map_dfr(r6_inits, function(r6) c("class" = class(r6)[1], r6$info()))
-  else
-    tibble::tibble(class = character(0), group = character(0),
-                   short = character(0), context = character(0),
-                   long = character(0))
+  } else {
+    tibble::tibble(
+      class = character(0), group = character(0),
+      short = character(0), context = character(0),
+      long = character(0)
+    )
+  }
 }
 
 merge_configs = function(new, existing) {
   xnames = names(existing)
   for (v in names(new)) {
-    if (is.list(new[[v]]))  {
+    if (is.list(new[[v]])) {
       new[[v]] = merge_configs(new[[v]], existing[[v]])
       # Ensure that existing list is the same "type"
       # If not, new gets precedent
     } else if (v %in% xnames &&
-               !is.null(existing[[v]]) &&
-               !is.list(existing[[v]])) {
+      !is.null(existing[[v]]) &&
+      !is.list(existing[[v]])) {
       new[[v]] = existing[[v]]
     }
   }

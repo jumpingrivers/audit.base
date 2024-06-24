@@ -1,3 +1,6 @@
+# audit.base 0.6.16 _2024-06-24_
+- chore: Use jrStyling
+
 # audit.base 0.6.15 _2024-06-06_
 - feat: Add support for Centos
 - fix: Update software version numbers

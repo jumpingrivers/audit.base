@@ -11,8 +11,10 @@ test_that("Testing sys deps", {
   expect_true(all(is.integer(q$n)))
 
   # Empty state
-  out = list(sys_deps = tibble::tibble(pkg = character(0),
-                                       sys_libs = character(0)))
+  out = list(sys_deps = tibble::tibble(
+    pkg = character(0),
+    sys_libs = character(0)
+  ))
   q = get_quarto_sys_deps(out)
   expect_equal(colnames(q), c("sys_libs", "pkg", "n"))
 })

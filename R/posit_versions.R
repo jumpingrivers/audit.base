@@ -10,7 +10,8 @@
 get_posit_versions = function(type = c("connect", "workbench", "drivers")) {
   type = match.arg(type)
   fname = system.file("extdata", "versions", paste0(type, ".csv"),
-                      mustWork = TRUE, package = "audit.base")
+    mustWork = TRUE, package = "audit.base"
+  )
   versions = readr::read_csv(fname, comment = "#", col_types = c("c", "D", "c"))
   versions = dplyr::arrange(versions, dplyr::desc(date))
   return(versions)
@@ -33,8 +34,8 @@ audit_posit_version = function(posit_version, type = c("connect", "workbench", "
     cli::cli_alert_info("The version {posit_version}, of Posit {type} isn't in the database")
   } else if (row_number > 1L) {
     newer_versions = versions[seq_len(row_number - 1), ]
-    no_of_versions = length(unique(newer_versions$version)) #nolint
-    no_of_cves = sum(!is.na(newer_versions$cve)) #nolint
+    no_of_versions = length(unique(newer_versions$version)) # nolint
+    no_of_cves = sum(!is.na(newer_versions$cve)) # nolint
     cli::cli_alert_info("Posit {type} is {cli::col_red('out of date')}")
     cli::cli_alert_info("There are {cli::col_red(no_of_versions)} newer versions that fix \\
                       {cli::col_red(no_of_cves)} CVEs")
@@ -65,7 +66,9 @@ lookup_version = function(posit_version, type) {
 
 version_to_date = function(version) {
   # Old style version
-  if (!is_new_version(version)) return(NA)
+  if (!is_new_version(version)) {
+    return(NA)
+  }
   as_date = stringr::str_match_all(version, "^(202[0-9])\\.([01][0-9])")[[1]]
   as.Date(paste(as_date[1, 2], as_date[1, 3], "01", sep = "-"))
 }

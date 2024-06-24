@@ -9,12 +9,15 @@ get_quarto_server_header = function(out) {
   headers = dplyr::filter(headers, .data$primary_header)
   headers = dplyr::arrange(headers, dplyr::desc(.data$status)) %>%
     dplyr::mutate(
-      header_docs = purrr::map(.data$documentation, ~htmltools::a(href = .x, "(docs)")),
-      message = purrr::map2(message, .data$header_docs,
-                            ~ gt::html(paste(.x, as.character(.y))))) %>%
+      header_docs = purrr::map(.data$documentation, ~ htmltools::a(href = .x, "(docs)")),
+      message = purrr::map2(
+        message, .data$header_docs,
+        ~ gt::html(paste(.x, as.character(.y)))
+      )
+    ) %>%
     dplyr::mutate(value = ifelse(is.na(.data$value), "-", .data$value)) |>
     dplyr::distinct()
-  dplyr::select(headers,  -"documentation", -"header_docs", -"primary_header")
+  dplyr::select(headers, -"documentation", -"header_docs", -"primary_header")
 }
 
 #' @rdname get_quarto_server_header
@@ -23,8 +26,10 @@ get_quarto_sys_deps = function(out) {
   sys_deps = out$sys_deps
   sys_deps %>%
     dplyr::group_by(.data$sys_libs) %>%
-    dplyr::reframe(pkg = paste(sort(.data$pkg), collapse = ", "),
-                   n = length(.data$sys_libs))
+    dplyr::reframe(
+      pkg = paste(sort(.data$pkg), collapse = ", "),
+      n = length(.data$sys_libs)
+    )
 }
 
 #' @rdname get_quarto_server_header
@@ -33,7 +38,8 @@ get_quarto_software_versions = function(out) {
   software = out$versions
   software = dplyr::select(software, "software", "version", "installed_version", "upgrade")
   software$installed_version = ifelse(is.na(software$installed_version),
-                                      "Not installed", software$installed_version)
+    "Not installed", software$installed_version
+  )
   software
 }
 
@@ -57,8 +63,8 @@ get_quarto_posit_version_msg = function(out, type = c("connect", "workbench", "d
     This could be because we've missed it or it's really old."
   } else if (row_number > 1L) {
     versions = get_posit_versions(type = type)
-    newer_versions = versions[seq_len(row_number - 1), ] #nolint
-    no_of_versions = length(unique(versions$version)) #nolint
+    newer_versions = versions[seq_len(row_number - 1), ] # nolint
+    no_of_versions = length(unique(versions$version)) # nolint
     msg = "Posit {type} is out of date (v{posit_version}).
              There are {no_of_versions} newer versions that fix {nrow(newer_versions)} CVEs.
              The latest version is v{versions[1, 1]}."

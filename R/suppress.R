@@ -3,8 +3,11 @@
 #' @param debug_level An integer, 0, 1, 2.
 #' @export
 get_suppress = function(debug_level) {
-  if (debug_level == 0) suppressMessages
-  else function(expr) expr
+  if (debug_level == 0) {
+    suppressMessages
+  } else {
+    function(expr) expr
+  }
 }
 
 #' @rdname get_suppress

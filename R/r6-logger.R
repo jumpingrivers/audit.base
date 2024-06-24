@@ -16,12 +16,14 @@ logger = R6::R6Class(
     #' @param passed Logical, if skipped, the NA
     stop_logger = function(passed) {
       time_taken = Sys.time() - private$start_time
-      private$log = dplyr::tibble(group = private$group,
-                                  short = private$short,
-                                  context = private$context,
-                                  long = private$long,
-                                  passed = passed,
-                                  time_taken = round(time_taken, 2))
+      private$log = dplyr::tibble(
+        group = private$group,
+        short = private$short,
+        context = private$context,
+        long = private$long,
+        passed = passed,
+        time_taken = round(time_taken, 2)
+      )
 
       msg_function(passed)
 
