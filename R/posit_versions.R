@@ -12,8 +12,8 @@ get_posit_versions = function(type = c("connect", "workbench", "drivers")) {
   fname = system.file("extdata", "versions", paste0(type, ".csv"),
     mustWork = TRUE, package = "audit.base"
   )
-  versions = readr::read_csv(fname, comment = "#", col_types = c("c", "D", "c"))
-  versions = dplyr::arrange(versions, dplyr::desc(date))
+  versions = readr::read_csv(fname, comment = "#", col_types = c("c", "c"))
+  versions = dplyr::arrange(versions, dplyr::desc(name))
   return(versions)
 }
 
