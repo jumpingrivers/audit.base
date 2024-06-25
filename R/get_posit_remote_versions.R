@@ -1,11 +1,17 @@
 get_posit_remote_versions = function(type = c("connect", "workbench")) {
+  if (!requireNamespace("rvest")) {
+    cli::cli_alert_danger("Missing package - rvest")
+  }
   type = match.arg(type)
-  url = if (type == "connect") "https://docs.posit.co/connect/news/" 
-        else "https://docs.posit.co/ide/news/"
+  url = if (type == "connect") {
+    "https://docs.posit.co/connect/news/"
+  } else {
+    "https://docs.posit.co/ide/news/"
+  }
   page = rvest::read_html(url)
   sections = rvest::html_elements(page, "section")
   v_tibbles = purrr::map_df(sections, extract_posit_cves)
-  all_v = get_all_remote_versions(page) |>
+  all_v = get_all_remote_versions(page) %>%
     dplyr::filter(!.data$version %in% v_tibbles$version) %>%
     dplyr::bind_rows(v_tibbles) %>%
     dplyr::arrange(dplyr::desc(.data$version))

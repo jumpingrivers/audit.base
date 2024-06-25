@@ -15,7 +15,7 @@ get_quarto_server_header = function(out) {
         ~ gt::html(paste(.x, as.character(.y)))
       )
     ) %>%
-    dplyr::mutate(value = ifelse(is.na(.data$value), "-", .data$value)) |>
+    dplyr::mutate(value = ifelse(is.na(.data$value), "-", .data$value)) %>%
     dplyr::distinct()
   dplyr::select(headers, -"documentation", -"header_docs", -"primary_header")
 }

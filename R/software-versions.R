@@ -97,12 +97,20 @@ versions_to_display = function(installed) {
   dplyr::select(l, -"version_num", -"installed_version_num")
 }
 
-get_latest_versions = function() {
-  versions_fname = system.file("extdata", "versions", "software.csv",
-    package = "audit.base",
-    mustWork = TRUE
-  )
-  versions = readr::read_csv(versions_fname, comment = "#", col_types = "fc")
+get_latest_versions = function(remote = TRUE) {
+  versions = if (isTRUE(remote)) {
+    get_latest_versions_remote()
+  } else {
+    NULL
+  }
+  if ("try-error" %in% class(versions) || is.null(versions)) {
+    cli::cli_alert_warning("Using cached version for software versions")
+    versions_fname = system.file("extdata", "versions", "software.csv",
+      package = "audit.base",
+      mustWork = TRUE
+    )
+    versions = readr::read_csv(versions_fname, comment = "#", col_types = "fc")
+  }
   versions$major = get_major(versions$version)
   versions$patch = get_patch(versions$version)
   # Add a version number.

@@ -1,5 +1,5 @@
 # https://gitlab.com/jumpingrivers/services/de/spd/infrastructure-template/-/blob/5c584fced32a6fc8fd7b25b3ea78f6fb7a8bd7ca/template/ansible/scripts/versions.sh
-create_software_tibble = function() {
+get_latest_versions_remote = function() {
   r = get_latest_versions_from_posit("r")
   py = get_latest_versions_from_posit("python")
   # Drop latest to get all releases
