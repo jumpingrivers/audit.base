@@ -1,3 +1,6 @@
+# audit.base 0.6.18 _2024-06-25_
+- feat: Dynamically obtain software versions, but fall but to static
+
 # audit.base 0.6.17 _2024-06-24_
 - chore: Software bump
 - feat: Automatically extract connect/workbench versions

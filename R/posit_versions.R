@@ -3,16 +3,27 @@
 #' Returns a tibble containing the Posit version, date of release,
 #' and any associated CVEs
 #' @param type Posit product of interest
+#' @param remote Try scrapping NEWS first, but fall back to local if that fails
 #' @export
 #' @examples
 #' get_posit_versions(type = "connect")
 #'
-get_posit_versions = function(type = c("connect", "workbench", "drivers")) {
+get_posit_versions = function(
+    type = c("connect", "workbench", "drivers"),
+    remote = TRUE) {
   type = match.arg(type)
-  fname = system.file("extdata", "versions", paste0(type, ".csv"),
-    mustWork = TRUE, package = "audit.base"
-  )
-  versions = readr::read_csv(fname, comment = "#", col_types = c("c", "c"))
+  versions = if (isTRUE(remote)) {
+    try(get_posit_remote_versions(type), silent = TRUE)
+  } else {
+    NULL
+  }
+  if ("try-error" %in% class(versions) || is.null(versions)) {
+    cli::cli_alert_warning("Unable to scrape NEWS page for {type}. Falling back to cache")
+    fname = system.file("extdata", "versions", paste0(type, ".csv"),
+      mustWork = TRUE, package = "audit.base"
+    )
+    versions = readr::read_csv(fname, comment = "#", col_types = c("c", "c"))
+  }
   versions = dplyr::arrange(versions, dplyr::desc(.data$version))
   return(versions)
 }

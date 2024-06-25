@@ -4,10 +4,12 @@
 \alias{get_posit_versions}
 \title{Posit Versions}
 \usage{
-get_posit_versions(type = c("connect", "workbench", "drivers"))
+get_posit_versions(type = c("connect", "workbench", "drivers"), remote = TRUE)
 }
 \arguments{
 \item{type}{Posit product of interest}
+
+\item{remote}{Try scrapping NEWS first, but fall back to local if that fails}
 }
 \description{
 Returns a tibble containing the Posit version, date of release,
