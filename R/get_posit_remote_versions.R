@@ -1,7 +1,6 @@
 get_posit_remote_versions = function(type = c("connect", "workbench")) {
   if (!requireNamespace("rvest")) {
-    cli::cli_alert_info("Missing package - rvest")
-    return(invisible(NULL))
+    cli::cli_alert_danger("Missing package - rvest")
   }
   type = match.arg(type)
   url = if (type == "connect") {
