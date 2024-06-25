@@ -1,3 +1,7 @@
+# audit.base 0.6.17 _2024-06-24_
+- chore: Software bump
+- feat: Automatically extract connect/workbench versions
+
 # audit.base 0.6.16 _2024-06-24_
 - chore: Use jrStyling
 

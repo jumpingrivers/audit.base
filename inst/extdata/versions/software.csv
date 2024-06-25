@@ -1,15 +1,14 @@
 software,version
-python,3.12.3
+python,3.12.4
 python,3.11.9
 python,3.10.14
 python,3.9.19
 python,3.8.19
-python,3.7.17
 quarto,1.4.555
 quarto,1.2.475
 quarto,1.1.189
 quarto,1.0.38
-r,4.4.0
+r,4.4.1
 r,4.3.3
 r,4.2.3
 r,4.1.3

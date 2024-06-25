@@ -48,5 +48,6 @@ test_that("Ensure that software versions are up to date", {
   versions = get_latest_versions()
   latest = create_software_tibble()
   # If this test files, try running update_software_csv() first
-  expect_true(all(latest$version %in% versions$version))
+  expect_true(all(latest$version %in% versions$version), 
+    info = "Try running update_all_versions()")
 })
