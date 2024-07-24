@@ -1,3 +1,6 @@
+# audit.base 0.6.19 _2024-07-24_
+- chore: Software bump
+
 # audit.base 0.6.18 _2024-06-25_
 - feat: Dynamically obtain software versions, but fall but to static
 
