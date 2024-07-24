@@ -47,7 +47,7 @@ test_that("Ensure that software versions are up to date", {
   testthat::skip_on_ci()
   versions = get_latest_versions(remote = FALSE)
   latest = get_latest_versions_remote()
-  # If this test files, try running update_software_csv() first
+
   expect_true(all(latest$version %in% versions$version),
     info = "Try running update_all_versions()"
   )
