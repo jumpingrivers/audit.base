@@ -64,8 +64,8 @@ merge_configs = function(new, existing) {
       # Ensure that existing list is the same "type"
       # If not, new gets precedent
     } else if (v %in% xnames &&
-      !is.null(existing[[v]]) &&
-      !is.list(existing[[v]])) {
+               !is.null(existing[[v]]) &&
+               !is.list(existing[[v]])) {
       new[[v]] = existing[[v]]
     }
   }

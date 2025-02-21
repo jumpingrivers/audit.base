@@ -1,10 +1,12 @@
-# https://gitlab.com/jumpingrivers/services/de/spd/infrastructure-template/-/blob/5c584fced32a6fc8fd7b25b3ea78f6fb7a8bd7ca/template/ansible/scripts/versions.sh
+# https://gitlab.com/jumpingrivers/services/de/spd/infrastructure-template/
+# -/blob/5c584fced32a6fc8fd7b25b3ea78f6fb7a8bd7ca/template/ansible/scripts/versions.sh
 get_latest_versions_remote = function() {
   r = get_latest_versions_from_posit("r")
   py = get_latest_versions_from_posit("python")
   # Drop latest to get all releases
   q = jsonlite::read_json("https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest")
-  quarto = c("1.0.38", "1.1.189", "1.2.475", "1.3.450", "1.4.557", stringr::str_remove(q$name, "^v"))
+  quarto = c("1.0.38", "1.1.189", "1.2.475", "1.3.450", "1.4.557", "1.5.57",
+             stringr::str_remove(q$name, "^v"))
 
   software_tibble = tibble::tibble(
     software = rep(

@@ -1,3 +1,7 @@
+# audit.base 0.6.20 _2024-02-21_
+- chore: Software bump
+- fix: Fix quarto reporting on out of date versions
+
 # audit.base 0.6.19 _2024-07-24_
 - chore: Software bump
 

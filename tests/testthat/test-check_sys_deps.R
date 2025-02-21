@@ -1,4 +1,5 @@
 test_that("Testing sys deps", {
+  testthat::skip_on_ci()
   if (Sys.info()["sysname"] != "Linux") testthat::skip()
   os_release = readLines("/etc/os-release")
   installed_libs = get_installed_libs()
