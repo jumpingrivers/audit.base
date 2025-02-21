@@ -47,9 +47,9 @@ audit_posit_version = function(posit_version, type = c("connect", "workbench", "
     newer_versions = versions[seq_len(row_number - 1), ]
     no_of_versions = length(unique(newer_versions$version)) # nolint
     no_of_cves = sum(!is.na(newer_versions$cve)) # nolint
-    cli::cli_alert_info("Posit {type} is {cli::col_red('out of date')}")
+    cli::cli_alert_info("Posit {type} is {cli::col_red('out of date')}.")
     cli::cli_alert_info("There are {cli::col_red(no_of_versions)} newer versions that fix \\
-                      {cli::col_red(no_of_cves)} CVEs")
+                      {cli::col_red(no_of_cves)} CVEs.")
   } else {
     cli::cli_alert_info("Posit {type} is up to date")
   }
