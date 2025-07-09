@@ -16,5 +16,5 @@ update_all_versions = function() {
 
   software = get_latest_versions_remote()
   readr::write_csv(software, file = "inst/extdata/versions/software.csv")
-  return(invisible(NULL))
+  invisible(NULL)
 }

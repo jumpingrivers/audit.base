@@ -26,5 +26,5 @@ get_posit_headers = function(headers) {
   } else {
     cli::cli_alert_danger("{cli::col_red('server')}: Contains too much information")
   }
-  return(posit_header)
+  posit_header
 }

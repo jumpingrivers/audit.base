@@ -65,8 +65,7 @@ get_installed_libs = function() {
   } else {
     cli::cli_abort("We don't support this OS yet")
   }
-  libs = clean_libs(os_release, libs)
-  return(libs)
+  clean_libs(os_release, libs)
 }
 
 #' @export
@@ -82,5 +81,5 @@ clean_libs = function(os_release, libs) {
   } else {
     cli::cli_abort("We don't support this OS yet")
   }
-  return(sort(libs))
+  sort(libs)
 }
