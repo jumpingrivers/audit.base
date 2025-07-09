@@ -1,4 +1,8 @@
-# audit.base 0.6.20 _2024-02-21_
+# audit.base 0.6.21 _2025-07-09_
+- chore: Software bump
+- feat: Update ubuntu to 24.04
+
+# audit.base 0.6.20 _2025-02-21_
 - chore: Software bump
 - fix: Fix quarto reporting on out of date versions
 
