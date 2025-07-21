@@ -9,9 +9,13 @@ get_quarto_server_header = function(out) {
   headers = dplyr::filter(headers, .data$primary_header)
   headers = dplyr::arrange(headers, dplyr::desc(.data$status)) %>%
     dplyr::mutate(
-      header_docs = purrr::map(.data$documentation, ~ htmltools::a(href = .x, "(docs)")),
+      header_docs = purrr::map(
+        .data$documentation,
+        ~ htmltools::a(href = .x, "(docs)")
+      ),
       message = purrr::map2(
-        message, .data$header_docs,
+        message,
+        .data$header_docs,
         ~ gt::html(paste(.x, as.character(.y)))
       )
     ) %>%
@@ -36,9 +40,17 @@ get_quarto_sys_deps = function(out) {
 #' @export
 get_quarto_software_versions = function(out) {
   software = out$versions
-  software = dplyr::select(software, "software", "version", "installed_version", "upgrade")
-  software$installed_version = ifelse(is.na(software$installed_version),
-    "Not installed", software$installed_version
+  software = dplyr::select(
+    software,
+    "software",
+    "version",
+    "installed_version",
+    "upgrade"
+  )
+  software$installed_version = ifelse(
+    is.na(software$installed_version),
+    "Not installed",
+    software$installed_version
   )
   software
 }
@@ -55,7 +67,10 @@ get_quarto_deploy = function(out) {
 #' @rdname get_quarto_server_header
 #' @inheritParams audit_posit_version
 #' @export
-get_quarto_posit_version_msg = function(out, type = c("connect", "workbench", "drivers")) {
+get_quarto_posit_version_msg = function(
+  out,
+  type = c("connect", "workbench", "drivers")
+) {
   posit_version = out$posit_version
   row_number = lookup_version(posit_version, type)
   if (is.na(row_number)) {

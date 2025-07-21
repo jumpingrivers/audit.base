@@ -10,11 +10,13 @@ test_that("Testing check server", {
   # Up to date
   latest_version = versions[1, ]$version
 
-  expect_message(audit_posit_version(latest_version, type),
+  expect_message(
+    audit_posit_version(latest_version, type),
     regexp = "up to date"
   )
 
-  expect_message(audit_posit_version(paste0(latest_version, ".pro1"), type),
+  expect_message(
+    audit_posit_version(paste0(latest_version, ".pro1"), type),
     regexp = "up to date"
   )
 
@@ -35,22 +37,22 @@ test_that("Testing check server", {
   v = lookup_version(posit_version = "2022.10.31", type)
   expect_true(is.na(v))
 
-  expect_message(audit_posit_version("2022.10.0", type),
-    regexp = "out of date"
-  )
+  expect_message(audit_posit_version("2022.10.0", type), regexp = "out of date")
 })
 
 test_that("Testing check Posit versions", {
   type = "connect"
   remote = get_posit_remote_versions(type)
   local = get_posit_versions(type, remote = FALSE)
-  expect_true(all(remote$version %in% local$version),
+  expect_true(
+    all(remote$version %in% local$version),
     info = "Try running update_all_versions()"
   )
   type = "workbench"
   remote = get_posit_remote_versions(type)
   local = get_posit_versions(type, remote = FALSE)
-  expect_true(all(remote$version %in% local$version),
+  expect_true(
+    all(remote$version %in% local$version),
     info = "Try running update_all_versions()"
   )
 })
