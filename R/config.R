@@ -20,8 +20,10 @@ create_config = function(file, pkg_name) {
     type = match.arg(type)
     yaml_file = file.path(dir, file)
     if (type == "error" && file.exists(yaml_file)) {
-      cli::cli_abort("Config file already exists.
-                   Either delete or change the `type` argument.")
+      cli::cli_abort(
+        "Config file already exists.
+                   Either delete or change the `type` argument."
+      )
     }
 
     new_config = create_config_list(dir, file, default, pkg_name)
@@ -49,8 +51,10 @@ get_check_info = function(dir, file, pkg_name) {
     purrr::map_dfr(r6_inits, function(r6) c("class" = class(r6)[1], r6$info()))
   } else {
     tibble::tibble(
-      class = character(0), group = character(0),
-      short = character(0), context = character(0),
+      class = character(0),
+      group = character(0),
+      short = character(0),
+      context = character(0),
       long = character(0)
     )
   }
@@ -63,9 +67,7 @@ merge_configs = function(new, existing) {
       new[[v]] = merge_configs(new[[v]], existing[[v]])
       # Ensure that existing list is the same "type"
       # If not, new gets precedent
-    } else if (v %in% xnames &&
-               !is.null(existing[[v]]) &&
-               !is.list(existing[[v]])) {
+    } else if (v %in% xnames && !is.null(existing[[v]]) && !is.list(existing[[v]])) {
       new[[v]] = existing[[v]]
     }
   }

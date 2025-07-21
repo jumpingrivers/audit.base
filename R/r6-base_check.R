@@ -29,10 +29,18 @@ base_check = R6::R6Class(
     },
     #' @description Summarise key class attributes
     info = function() {
-      if (is.na(private$group)) stop("Missing group")
-      if (is.na(private$context)) stop("Missing context")
-      if (is.na(private$short)) stop("Missing short")
-      if (is.na(private$long)) stop("Missing long description")
+      if (is.na(private$group)) {
+        stop("Missing group")
+      }
+      if (is.na(private$context)) {
+        stop("Missing context")
+      }
+      if (is.na(private$short)) {
+        stop("Missing short")
+      }
+      if (is.na(private$long)) {
+        stop("Missing long description")
+      }
 
       c(
         "group" = private$group,

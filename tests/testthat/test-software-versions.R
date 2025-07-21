@@ -9,11 +9,14 @@ test_that("Testing software versions", {
     installed_version = c("3.4.3", "3.5.3", "3.7.1")
   )
   augmented = augment_installed(installed)
-  expect_equal(colnames(augmented), c(
-    v_colnames[1:4],
-    paste0("installed_", c("version", "patch")),
-    "upgrade"
-  ))
+  expect_equal(
+    colnames(augmented),
+    c(
+      v_colnames[1:4],
+      paste0("installed_", c("version", "patch")),
+      "upgrade"
+    )
+  )
   expect_equal(sum(!augmented$upgrade), 1)
 
   # Check specific packages
@@ -39,7 +42,10 @@ test_that("Testing software versions quarto output", {
   augmented = suppressMessages(augment_installed(installed))
   out = list(versions = augmented)
   q = get_quarto_software_versions(out)
-  expect_equal(colnames(q), c("software", "version", "installed_version", "upgrade"))
+  expect_equal(
+    colnames(q),
+    c("software", "version", "installed_version", "upgrade")
+  )
   expect_true(all(is.logical(q$upgrade)))
 })
 
@@ -48,7 +54,8 @@ test_that("Ensure that software versions are up to date", {
   versions = get_latest_versions(remote = FALSE)
   latest = get_latest_versions_remote()
 
-  expect_true(all(latest$version %in% versions$version),
+  expect_true(
+    all(latest$version %in% versions$version),
     info = "Try running update_all_versions()"
   )
 })

@@ -16,3 +16,5 @@ rsconnect/
 /rsconnect/
 ^\.github$
 ^\.commitlintrc\.yml$
+^[.]?air[.]toml$
+^\.vscode$

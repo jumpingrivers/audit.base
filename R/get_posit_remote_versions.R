@@ -21,7 +21,10 @@ get_posit_remote_versions = function(type = c("connect", "workbench")) {
 extract_posit_cves = function(section) {
   posit_name = rvest::html_attrs(section)
   posit_name = as.vector(posit_name["id"])
-  posit_version = stringr::str_extract(posit_name, "[0-9]{4}\\.[0-9]{1,2}\\.[0-9]{1,2}")
+  posit_version = stringr::str_extract(
+    posit_name,
+    "[0-9]{4}\\.[0-9]{1,2}\\.[0-9]{1,2}"
+  )
 
   li = section %>%
     rvest::html_elements("li") %>%

@@ -1,3 +1,7 @@
+# audit.base 0.6.22 _2025-07-21_
+- chore: Use air for formatting
+- chore: Update requirements.txt for python example
+
 # audit.base 0.6.21 _2025-07-09_
 - chore: Software bump
 - feat: Update ubuntu to 24.04

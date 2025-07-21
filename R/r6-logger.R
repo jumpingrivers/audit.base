@@ -8,7 +8,9 @@ logger = R6::R6Class(
   public = list(
     #' @description Starts the logger
     start_logger = function() {
-      cli::cli_alert_info("Starting check: {private$group}({private$short}): {private$context}")
+      cli::cli_alert_info(
+        "Starting check: {private$group}({private$short}): {private$context}"
+      )
 
       private$start_time = Sys.time()
     },
