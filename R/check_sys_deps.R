@@ -12,9 +12,6 @@
 check_sys_deps = function(os_release, installed_libs, debug_level = 0:2) {
   debug_level = get_debug_level(debug_level)
   cli::cli_h2("Systems Libraries")
-  cli::cli_alert_info(
-    "This may take a few minutes as we are deploying a plumber API onto Connect"
-  )
   # Clean up response
   pkg_look_up = get_os_sys_deps(os_release)
 
@@ -28,7 +25,7 @@ check_sys_deps = function(os_release, installed_libs, debug_level = 0:2) {
     cli::cli_alert_info("Missing sys_libs: {sys_libs}")
     cli::cli_alert_info("Note: this is not necessarily a bad thing")
   }
-  return(missing_libs)
+  missing_libs
 }
 
 # Contents of /etc/os-release

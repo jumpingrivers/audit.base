@@ -11,6 +11,10 @@ get_pkg_requirements = function(
     "{repo_id}/sysreqs?all=true&distribution={distribution}&release={release}"
   ) # nolint
   url = glue::glue("{base_url}{config_url}")
+  cli::cli_alert_info(
+    "Connecting to {url} for system requirements"
+  )
+
   res = httr::GET(url)
   r = httr::content(res)
 

@@ -32,7 +32,7 @@ get_posit_versions = function(
     versions = readr::read_csv(fname, comment = "#", col_types = c("c", "c"))
   }
   versions = dplyr::arrange(versions, dplyr::desc(.data$version))
-  return(versions)
+  versions
 }
 
 #' Audit Posit Server
@@ -67,9 +67,8 @@ audit_posit_version = function(
   } else {
     cli::cli_alert_info("Posit {type} is up to date")
   }
-  return(invisible(NULL))
+  invisible(NULL)
 }
-
 
 lookup_version = function(posit_version, type) {
   versions = get_posit_versions(type = type)
@@ -92,7 +91,7 @@ lookup_version = function(posit_version, type) {
     )
     row_number = which(versions$version == posit_version)[1]
   }
-  return(row_number)
+  row_number
 }
 
 version_to_date = function(version) {

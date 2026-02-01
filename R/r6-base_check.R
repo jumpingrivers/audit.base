@@ -66,7 +66,7 @@ base_check = R6::R6Class(
         return(FALSE)
       }
       group = config[[private$group]]
-      return(isFALSE(group[[private$short]]))
+      isFALSE(group[[private$short]])
     },
     checker = function(check) {
       self$start_logger()
@@ -77,7 +77,7 @@ base_check = R6::R6Class(
         has_passed = !inherits(res, "try-error") && isTRUE(res)
       }
       self$stop_logger(has_passed)
-      return(invisible(self))
+      invisible(self)
     }
   )
 )

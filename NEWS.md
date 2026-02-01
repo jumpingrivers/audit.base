@@ -1,3 +1,6 @@
+# audit.base 0.6.23 _2026-01-30_
+- chore: Update quarto, requirements.txt and software versions
+
 # audit.base 0.6.22 _2025-07-21_
 - chore: Use air for formatting
 - chore: Update requirements.txt for python example

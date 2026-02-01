@@ -29,5 +29,5 @@ init_r6_check = function(export, dir, file, pkg_name) {
   } else {
     obj = NULL
   }
-  return(obj)
+  obj
 }

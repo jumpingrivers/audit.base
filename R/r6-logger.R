@@ -28,8 +28,7 @@ logger = R6::R6Class(
       )
 
       msg_function(passed)
-
-      return(invisible(self))
+      invisible(self)
     },
     #' @description Retrieve the log
     #' @return Check log
@@ -51,5 +50,5 @@ msg_function = function(has_passed) {
   } else {
     cli::cli_alert_danger("Check finished")
   }
-  return(invisible(NULL))
+  invisible(NULL)
 }
