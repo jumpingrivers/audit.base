@@ -1,3 +1,6 @@
+# audit.base 0.6.24 _2026-02-01_
+- fix: Adding end of life python versions - #28
+
 # audit.base 0.6.23 _2026-01-30_
 - chore: Update quarto, requirements.txt and software versions
 
