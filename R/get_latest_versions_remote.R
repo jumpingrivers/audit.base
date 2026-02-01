@@ -15,6 +15,7 @@ get_latest_versions_remote = function() {
     "1.4.557",
     "1.5.57",
     "1.6.43",
+    "1.7.34",
     stringr::str_remove(q$name, "^v")
   )
 

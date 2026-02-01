@@ -21,8 +21,7 @@ create_config = function(file, pkg_name) {
     yaml_file = file.path(dir, file)
     if (type == "error" && file.exists(yaml_file)) {
       cli::cli_abort(
-        "Config file already exists.
-                   Either delete or change the `type` argument."
+        "Config file already exists. Either delete or change the `type` argument."
       )
     }
 
@@ -32,7 +31,7 @@ create_config = function(file, pkg_name) {
       new_config = merge_configs(new_config, existing_config)
     }
     yaml::write_yaml(new_config, file = yaml_file)
-    return(invisible(new_config))
+    invisible(new_config)
   }
 }
 create_config_list = function(dir, file, default, pkg_name) {

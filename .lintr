@@ -1,6 +1,7 @@
 linters: linters_with_defaults(
     assignment_linter = NULL,
     line_length_linter(100),
+	pipe_consistency_linter = NULL,
     undesirable_operator_linter(
       modify_defaults(
         default_undesirable_operators,
@@ -9,5 +10,6 @@ linters: linters_with_defaults(
     )
   )
 exclusions: list(
-    "^cache/"
+    "^cache/",
+    "inst/extdata/render_quarto/observable/"
   )

@@ -18,3 +18,5 @@ rsconnect/
 ^\.commitlintrc\.yml$
 ^[.]?air[.]toml$
 ^\.vscode$
+\.venv
+\.husky

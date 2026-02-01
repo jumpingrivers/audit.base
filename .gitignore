@@ -30,3 +30,4 @@ inst/doc
 *.swp
 .Rproj.user
 config-uat-rsc.yml
+.venv/

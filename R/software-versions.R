@@ -26,7 +26,7 @@ print_colour_versions = function(installed) {
     row = installed[i, ]
     print_colour_version(row)
   }
-  return(invisible(NULL))
+  invisible(NULL)
 }
 
 print_colour_version = function(row) {
@@ -50,7 +50,7 @@ print_colour_version = function(row) {
       "{software_name}: Latest version installed v{row$installed_version}"
     )
   }
-  return(invisible(NULL))
+  invisible(NULL)
 }
 
 # Returns X.Y from X.Y.Z
