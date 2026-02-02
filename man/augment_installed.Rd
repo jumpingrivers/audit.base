@@ -5,12 +5,14 @@
 \alias{print_colour_versions}
 \title{Augments installed software columns}
 \usage{
-augment_installed(installed, verbose = TRUE)
+augment_installed(installed, remote = FALSE, verbose = TRUE)
 
 print_colour_versions(installed)
 }
 \arguments{
 \item{installed}{A tibble with columns software and installed_version}
+
+\item{remote}{Use remote server for obtain versions}
 
 \item{verbose}{Default TRUE.}
 }
