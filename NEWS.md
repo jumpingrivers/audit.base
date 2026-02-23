@@ -1,3 +1,10 @@
+# audit.base 0.6.25 _2026-02-23_
+- chore: Update workbench versions
+- feat: Adding sys lib aliases
+- fix: Removed scraping issue warning for drivers
+- fix: Use `read.csv()` to avoid unnecessary `read_csv()` warning
+- fix: Don't suppress all messages from checks
+
 # audit.base 0.6.24 _2026-02-01_
 - fix: Adding end of life python versions - fixes #28
 

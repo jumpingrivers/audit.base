@@ -13,15 +13,17 @@ get_posit_versions = function(
   remote = TRUE
 ) {
   type = match.arg(type)
-  versions = if (isTRUE(remote)) {
+  versions = if (isTRUE(remote) && type != "drivers") {
     try(get_posit_remote_versions(type), silent = TRUE)
   } else {
     NULL
   }
   if ("try-error" %in% class(versions) || is.null(versions)) {
-    cli::cli_alert_warning(
-      "Unable to scrape NEWS page for {type}. Falling back to cache"
-    )
+    if (type != "drivers") {
+      cli::cli_alert_warning(
+        "Unable to scrape NEWS page for {type}. Falling back to cache"
+      )
+    }
     fname = system.file(
       "extdata",
       "versions",
@@ -29,7 +31,9 @@ get_posit_versions = function(
       mustWork = TRUE,
       package = "audit.base"
     )
-    versions = readr::read_csv(fname, comment = "#", col_types = c("c", "c"))
+    # Can't figure out how to do character missing values in read_csv when entire column is missing
+    versions = read.csv(fname, header = TRUE, comment.char = "#", colClasses = "character")
+    tibble::as_tibble(versions)
   }
   versions = dplyr::arrange(versions, dplyr::desc(.data$version))
   versions

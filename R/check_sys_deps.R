@@ -18,7 +18,7 @@ check_sys_deps = function(os_release, installed_libs, debug_level = 0:2) {
   # Determine which libs are missing
   missing_libs = pkg_look_up[!(pkg_look_up$sys_libs %in% installed_libs), ]
   missing_libs = dplyr::arrange(missing_libs, .data$sys_libs, .data$pkg)
-  cli::cli_alert_info("Unable to install {nrow(missing_libs)} CRAN packages")
+  cli::cli_alert_info("Unable to install {nrow(missing_libs)} CRAN package{?s}")
 
   if (nrow(missing_libs) > 0) {
     sys_libs = unique(missing_libs$sys_libs) # nolint
@@ -44,7 +44,11 @@ get_os_sys_deps = function(os_release) {
     cli::cli_abort("This OS isn't supported")
   }
   reqs = get_pkg_requirements(distribution = id, release = version_id)
-  reqs[!is.na(reqs$sys_libs), ]
+  reqs = reqs[!is.na(reqs$sys_libs), ]
+  if (id == "ubuntu") {
+    reqs$sys_libs = switch_ubuntu_aliases(reqs$sys_libs)
+  }
+  reqs
 }
 
 #' Determines Installed Sys Libs
@@ -75,10 +79,21 @@ clean_libs = function(os_release, libs) {
   os_release_df = os_release_to_df(os_release)
   if (is_ubuntu(os_release_df)) {
     libs = stringr::str_match(libs, "^[^/]*")[, 1]
+    libs = switch_ubuntu_aliases(libs)
   } else if (is_redhat(os_release_df) || is_centos(os_release_df)) {
     libs = stringr::str_match(libs, "^[^\\.]*")[, 1]
   } else {
     cli::cli_abort("We don't support this OS yet")
   }
   sort(libs)
+}
+
+# In ubuntu, pkgs can have virtual packages.Just tidy up
+switch_ubuntu_aliases = function(libs) {
+  fname = system.file("extdata", "lib-aliases.csv", package = "audit.base", mustWork = TRUE)
+  aliases = readr::read_csv(fname, col_types = c("c", "c"))
+  for (i in seq_len(nrow(aliases))) {
+    libs[libs == aliases[i, ]$pkg1] = aliases[i, ]$pkg2
+  }
+  libs
 }
