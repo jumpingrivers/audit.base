@@ -18,7 +18,7 @@ check_sys_deps = function(os_release, installed_libs, debug_level = 0:2) {
   # Determine which libs are missing
   missing_libs = pkg_look_up[!(pkg_look_up$sys_libs %in% installed_libs), ]
   missing_libs = dplyr::arrange(missing_libs, .data$sys_libs, .data$pkg)
-  cli::cli_alert_info("Unable to install {nrow(missing_libs)} CRAN packages")
+  cli::cli_alert_info("Unable to install {nrow(missing_libs)} CRAN package{?s}")
 
   if (nrow(missing_libs) > 0) {
     sys_libs = unique(missing_libs$sys_libs) # nolint
