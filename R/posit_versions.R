@@ -31,7 +31,9 @@ get_posit_versions = function(
       mustWork = TRUE,
       package = "audit.base"
     )
-    versions = readr::read_csv(fname, comment = "#", col_types = c("c", "c"))
+    # Can't figure out how to do character missing values in read_csv when entire column is missing
+    versions = read.csv(fname, header = TRUE, comment.char = "#", colClasses = "character")
+    tibble::as_tibble(versions)
   }
   versions = dplyr::arrange(versions, dplyr::desc(.data$version))
   versions
