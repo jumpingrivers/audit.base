@@ -75,6 +75,9 @@ base_check = R6::R6Class(
       } else {
         res = try(check, silent = TRUE)
         has_passed = !inherits(res, "try-error") && isTRUE(res)
+        if (inherits(res, "try-error")) {
+          get_suppress(debug_level)(message(attributes(res)[["condition"]]$message))
+        }
       }
       self$stop_logger(has_passed)
       invisible(self)
