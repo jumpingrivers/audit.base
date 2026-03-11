@@ -68,7 +68,7 @@ base_check = R6::R6Class(
       group = config[[private$group]]
       isFALSE(group[[private$short]])
     },
-    checker = function(check) {
+    checker = function(check, debug_level) {
       self$start_logger()
       if (private$skip_test()) {
         has_passed = NA
