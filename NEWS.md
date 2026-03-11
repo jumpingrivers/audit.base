@@ -1,3 +1,8 @@
+# audit.base 0.6.26 _2026-03-11_
+- fix: `debug_level` not being passed
+- fix: Rogue comment line in `lib-aliases.csv`
+- chore: Update Connect versions
+
 # audit.base 0.6.25 _2026-02-23_
 - chore: Update workbench versions
 - feat: Adding sys lib aliases
