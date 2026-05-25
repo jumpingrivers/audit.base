@@ -1,3 +1,6 @@
+# audit.base 0.6.27 _2026-05-25_
+  * chore: Software bump
+
 # audit.base 0.6.26 _2026-03-11_
 - fix: `debug_level` not being passed
 - fix: Rogue comment line in `lib-aliases.csv`
