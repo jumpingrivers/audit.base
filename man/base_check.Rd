@@ -5,95 +5,92 @@
 \alias{base_check}
 \title{Base Check Class}
 \description{
-Base Check Class
-
-Base Check Class
-}
-\details{
 Inherited underlying base class.
 Shouldn't be used directly
 }
 \section{Super class}{
-\code{\link[audit.base:logger]{audit.base::logger}} -> \code{base_check}
+\code{\link[audit.base:logger]{logger}} -> \code{base_check}
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{group}}{Field for grouping tests}
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{group}}{Field for grouping tests}
 
-\item{\code{short}}{Use in config.yml}
+    \item{\code{short}}{Use in config.yml}
 
-\item{\code{context}}{Human readable string}
+    \item{\code{context}}{Human readable string}
 
-\item{\code{long}}{A long description of the test}
+    \item{\code{long}}{A long description of the test}
 
-\item{\code{account}}{Account name}
-}
-\if{html}{\out{</div>}}
+    \item{\code{account}}{Account name}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-base_check-new}{\code{base_check$new()}}
-\item \href{#method-base_check-info}{\code{base_check$info()}}
-\item \href{#method-base_check-clone}{\code{base_check$clone()}}
+  \itemize{
+    \item \href{#method-base_check-initialize}{\code{base_check$new()}}
+    \item \href{#method-base_check-info}{\code{base_check$info()}}
+    \item \href{#method-base_check-clone}{\code{base_check$clone()}}
+  }
 }
-}
-\if{html}{\out{
-<details open><summary>Inherited methods</summary>
+\if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="get_log"><a href='../../audit.base/html/logger.html#method-logger-get_log'><code>audit.base::logger$get_log()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="start_logger"><a href='../../audit.base/html/logger.html#method-logger-start_logger'><code>audit.base::logger$start_logger()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="stop_logger"><a href='../../audit.base/html/logger.html#method-logger-stop_logger'><code>audit.base::logger$stop_logger()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="get_log"><a href='../../audit.base/html/logger.html#method-logger-get_log'><code>logger$get_log()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="start_logger"><a href='../../audit.base/html/logger.html#method-logger-start_logger'><code>logger$start_logger()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="audit.base" data-topic="logger" data-id="stop_logger"><a href='../../audit.base/html/logger.html#method-logger-stop_logger'><code>logger$stop_logger()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-base_check-new"></a>}}
-\if{latex}{\out{\hypertarget{method-base_check-new}{}}}
-\subsection{Method \code{new()}}{
-Set parameters for config file location
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{base_check$new(dir = ".", file = "config-uat.yml", debug_level = 0)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-base_check-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-base_check-initialize}{}}}
+\subsection{\code{base_check$new()}}{
+  Set parameters for config file location
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{base_check$new(dir = ".", file = "config-uat.yml", debug_level = 0)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dir}}{directory location of the the config file}
+      \item{\code{file}}{config file name}
+      \item{\code{debug_level}}{Value of 0, 1, or 2}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dir}}{directory location of the the config file}
-
-\item{\code{file}}{config file name}
-
-\item{\code{debug_level}}{Value of 0, 1, or 2}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-base_check-info"></a>}}
 \if{latex}{\out{\hypertarget{method-base_check-info}{}}}
-\subsection{Method \code{info()}}{
-Summarise key class attributes
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{base_check$info()}\if{html}{\out{</div>}}
+\subsection{\code{base_check$info()}}{
+  Summarise key class attributes
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{base_check$info()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-base_check-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-base_check-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{base_check$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{base_check$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{base_check$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

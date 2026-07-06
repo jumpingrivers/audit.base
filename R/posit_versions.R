@@ -36,6 +36,8 @@ get_posit_versions = function(
     tibble::as_tibble(versions)
   }
   versions = dplyr::arrange(versions, dplyr::desc(.data$version))
+  versions$cve = as.numeric(versions$cve)
+  versions$cve[!is.na(versions$cve)] = 0
   versions
 }
 
