@@ -1,3 +1,8 @@
+# audit.base 0.6.28 _2026-07-06_
+  * docs: Document `check_timezone()`
+  * fix: Coerce `cve` column to numeric in `get_posit_versions()`
+  * chore: Set `assignment-style = "equal"` in `air.toml`
+
 # audit.base 0.6.27 _2026-05-25_
   * chore: Software bump
 
