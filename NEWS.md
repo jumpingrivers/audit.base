@@ -1,3 +1,7 @@
+# audit.base 0.6.29 _2026-07-07_
+  * feat: Use uv's Python build metadata to determine latest Python versions
+  * chore: Software bump
+
 # audit.base 0.6.28 _2026-07-06_
   * docs: Document `check_timezone()`
   * fix: Coerce `cve` column to numeric in `get_posit_versions()`

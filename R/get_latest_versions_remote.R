@@ -2,7 +2,7 @@
 # -/blob/5c584fced32a6fc8fd7b25b3ea78f6fb7a8bd7ca/template/ansible/scripts/versions.sh
 get_latest_versions_remote = function() {
   r = get_latest_versions_from_posit("r")
-  py = get_latest_versions_from_posit("python")
+  py = get_uv_python_versions()
   # Drop latest to get all releases
   q = jsonlite::read_json(
     "https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest"
@@ -16,6 +16,7 @@ get_latest_versions_remote = function() {
     "1.5.57",
     "1.6.43",
     "1.7.34",
+    "1.8.27",
     stringr::str_remove(q$name, "^v")
   )
 
