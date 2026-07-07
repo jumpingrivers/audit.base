@@ -1,10 +1,13 @@
 software,version
-python,3.13.9
-python,3.12.12
-python,3.11.14
-python,3.10.19
+python,3.14.6
+python,3.13.14
+python,3.12.13
+python,3.11.15
+python,3.10.20
 python,3.9.25
+python,3.8.20
 quarto,1.9.38
+quarto,1.8.27
 quarto,1.7.34
 quarto,1.6.43
 quarto,1.5.57
