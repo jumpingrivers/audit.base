@@ -36,9 +36,14 @@ get_posit_versions = function(
     tibble::as_tibble(versions)
   }
   versions = dplyr::arrange(versions, dplyr::desc(.data$version))
-  versions$cve = as.numeric(versions$cve)
-  versions$cve[!is.na(versions$cve)] = 0
+  # Versions without a CVE have an empty string; make these NA so they aren't counted
+  versions$cve = dplyr::na_if(trimws(as.character(versions$cve)), "")
   versions
+}
+
+# Number of distinct CVEs; the release notes can list the same CVE more than once
+count_cves = function(versions) {
+  dplyr::n_distinct(versions$cve, na.rm = TRUE)
 }
 
 #' Audit Posit Server
@@ -64,7 +69,7 @@ audit_posit_version = function(
   } else if (row_number > 1L) {
     newer_versions = versions[seq_len(row_number - 1), ]
     no_of_versions = length(unique(newer_versions$version)) # nolint
-    no_of_cves = sum(!is.na(newer_versions$cve)) # nolint
+    no_of_cves = count_cves(newer_versions) # nolint
     cli::cli_alert_info("Posit {type} is {cli::col_red('out of date')}.")
     cli::cli_alert_info(
       "There are {cli::col_red(no_of_versions)} newer versions that fix \\

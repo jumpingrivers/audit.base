@@ -35,3 +35,14 @@ test_that("version_status maps row numbers", {
   expect_equal(version_status(1L), "current")
   expect_equal(version_status(4L), "outdated")
 })
+
+test_that("Posit version message counts the CVEs fixed by newer versions", {
+  local_mocked_bindings(get_posit_versions = function(type, remote = TRUE) {
+    tibble::tibble(
+      version = c("2025.03.0", "2025.03.0", "2025.03.0", "2025.02.0", "2025.01.0"),
+      cve = c("CVE-2025-0001", "CVE-2025-0002", "CVE-2025-0001", NA, NA)
+    )
+  })
+  msg = get_quarto_posit_version_msg(list(posit_version = "2025.01.0"), "connect")
+  expect_match(msg, "There are 2 newer versions that fix 2 CVEs", fixed = TRUE)
+})

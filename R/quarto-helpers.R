@@ -81,7 +81,7 @@ get_quarto_posit_version_msg = function(
     versions = get_posit_versions(type = type)
     newer_versions = versions[seq_len(row_number - 1), ] # nolint
     no_of_versions = length(unique(newer_versions$version)) # nolint
-    no_of_cves = sum(!is.na(newer_versions$cve)) # nolint
+    no_of_cves = count_cves(newer_versions) # nolint
     msg = "Posit {type} is out of date (v{posit_version}).
              There are {no_of_versions} newer versions that fix {no_of_cves} CVEs.
              The latest version is v{versions[1, 1]}."

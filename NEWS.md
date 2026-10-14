@@ -1,5 +1,6 @@
 # audit.base 0.7.0 _2026-10-14_
   * feat: Add `get_quarto_posit_version_status()`, returning "current", "outdated" or "unknown" for a Posit server version
+  * fix: Out-of-date Posit versions reported "fix 0 CVEs" since 0.6.28, because `get_posit_versions()` turned every CVE ID into `NA`. CVE IDs are kept, and each CVE is counted once.
 
 # audit.base 0.6.30 _2026-10-13_
   * fix: Update uv `download-metadata.json` URL after upstream crate split (astral-sh/uv#22301)
