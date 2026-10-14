@@ -1,3 +1,6 @@
+# audit.base 0.7.1 _2026-10-14_
+  * fix: `check_timezone()` reports the timezone when `timedatectl` fails, and shows a failure as an error rather than a tick (#46)
+
 # audit.base 0.7.0 _2026-10-14_
   * feat: Add `get_quarto_posit_version_status()`, returning "current", "outdated" or "unknown" for a Posit server version
   * fix: Out-of-date Posit versions reported "fix 0 CVEs" since 0.6.28, because `get_posit_versions()` turned every CVE ID into `NA`. CVE IDs are kept, and each CVE is counted once.
