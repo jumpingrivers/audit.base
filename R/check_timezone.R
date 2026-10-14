@@ -5,17 +5,13 @@
 #' @export
 check_timezone = function() {
   cli::cli_h1("Checking timezone")
-  tz = tryCatch(
-    Sys.timezone(),
-    warning = function(w) {
-      NA
-    }
-  )
+  # Sys.timezone() warns when timedatectl fails, but can still find the timezone
+  tz = suppressWarnings(Sys.timezone())
   check = !is.na(tz)
   if (isTRUE(check)) {
     cli::cli_alert_success(paste0("Timezone set: ", tz))
   } else {
-    cli::cli_alert_success(paste0("Timezone seems incorrect: ", tz))
+    cli::cli_alert_danger("Timezone not set")
   }
   invisible(check)
 }
