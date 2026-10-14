@@ -159,7 +159,7 @@ versions_to_display = function(installed, remote = FALSE) {
 
 get_latest_versions = function(remote = TRUE) {
   versions = if (isTRUE(remote)) {
-    get_latest_versions_remote()
+    try(get_latest_versions_remote(), silent = TRUE)
   } else {
     NULL
   }

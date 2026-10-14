@@ -1,3 +1,9 @@
+# audit.base 0.6.30 _2026-10-13_
+  * fix: Update uv `download-metadata.json` URL after upstream crate split (astral-sh/uv#22301)
+  * fix: `get_latest_versions()` falls back to cached versions when a remote lookup fails
+  * fix: Add Quarto 1.9.38 to the list of past Quarto releases
+  * chore: Software bump
+
 # audit.base 0.6.29 _2026-07-07_
   * feat: Use uv's Python build metadata to determine latest Python versions
   * chore: Software bump

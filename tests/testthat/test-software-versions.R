@@ -84,3 +84,12 @@ test_that("Ensure that software versions are up to date", {
     info = "Try running update_all_versions()"
   )
 })
+
+test_that("get_latest_versions() falls back to cache when remote lookup fails", {
+  local_mocked_bindings(
+    get_latest_versions_remote = function() stop("HTTP 404")
+  )
+  expect_message(get_latest_versions(remote = TRUE), "Using cached version")
+  versions = suppressMessages(get_latest_versions(remote = TRUE))
+  expect_equal(versions, suppressMessages(get_latest_versions(remote = FALSE)))
+})
