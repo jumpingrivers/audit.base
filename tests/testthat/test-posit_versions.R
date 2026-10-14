@@ -56,3 +56,20 @@ test_that("Testing check Posit versions", {
     info = "Try running update_all_versions()"
   )
 })
+
+test_that("get_posit_versions() keeps CVE IDs and marks versions without one as NA", {
+  versions = get_posit_versions("connect", remote = FALSE)
+  expect_type(versions$cve, "character")
+  expect_false(any(versions$cve == "", na.rm = TRUE))
+  expect_true("CVE-2021-38297" %in% versions$cve)
+  expect_true(all(grepl("^CVE-", stats::na.omit(versions$cve))))
+})
+
+test_that("count_cves() counts each CVE once", {
+  versions = tibble::tibble(
+    version = c("2025.03.0", "2025.03.0", "2025.03.0", "2025.02.0"),
+    cve = c("CVE-2025-0001", "CVE-2025-0002", "CVE-2025-0001", NA)
+  )
+  expect_equal(count_cves(versions), 2L)
+  expect_equal(count_cves(versions[4, ]), 0L)
+})
