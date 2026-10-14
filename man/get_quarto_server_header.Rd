@@ -6,6 +6,7 @@
 \alias{get_quarto_software_versions}
 \alias{get_quarto_deploy}
 \alias{get_quarto_posit_version_msg}
+\alias{get_quarto_posit_version_status}
 \title{Quarto Helper Functions}
 \usage{
 get_quarto_server_header(out)
@@ -17,11 +18,20 @@ get_quarto_software_versions(out)
 get_quarto_deploy(out)
 
 get_quarto_posit_version_msg(out, type = c("connect", "workbench", "drivers"))
+
+get_quarto_posit_version_status(
+  out,
+  type = c("connect", "workbench", "drivers")
+)
 }
 \arguments{
 \item{out}{Output from check}
 
 \item{type}{Posit product of interest}
+}
+\value{
+For `get_quarto_posit_version_status()`, one of `"current"`,
+  `"outdated"` or `"unknown"` (the version isn't in our database).
 }
 \description{
 In general not used by users.

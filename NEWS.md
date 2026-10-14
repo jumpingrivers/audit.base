@@ -1,3 +1,6 @@
+# audit.base 0.7.0 _2026-10-14_
+  * feat: Add `get_quarto_posit_version_status()`, returning "current", "outdated" or "unknown" for a Posit server version
+
 # audit.base 0.6.30 _2026-10-13_
   * fix: Update uv `download-metadata.json` URL after upstream crate split (astral-sh/uv#22301)
   * fix: `get_latest_versions()` falls back to cached versions when a remote lookup fails
