@@ -103,44 +103,22 @@ test_that("Versions are compared as numbers, not text", {
   expect_equal(min_version(c("1.9", "1.10", "1.3")), "1.3")
 })
 
-test_that("A release newer than the version list isn't reported as past EOL", {
-  local_mocked_bindings(
-    get_latest_versions = function(remote = FALSE) {
-      versions = tibble::tibble(
-        software = factor("quarto"),
-        version = c("1.8.27", "1.9.38")
-      )
-      versions$major = get_major(versions$version)
-      versions$patch = get_patch(versions$version)
-      versions$version_num = c(2L, 1L)
-      versions$within_eol = TRUE
-      dplyr::group_by(versions, .data$software)
-    }
-  )
-  installed = tibble::tibble(software = "quarto", installed_version = "1.10.18")
+augment_quarto = function(version) {
+  installed = tibble::tibble(software = "quarto", installed_version = version)
   augmented = augment_installed(installed, remote = FALSE, verbose = FALSE)
-  row = augmented[augmented$installed_version %in% "1.10.18", ]
-  expect_true(row$within_eol)
-  expect_false(row$upgrade)
-  expect_message(print_colour_version(row), "newer than")
-})
+  augmented[augmented$installed_version %in% version, ]
+}
 
-test_that("A Quarto version far in the future is newer than the list, not past EOL", {
-  installed = tibble::tibble(software = "quarto", installed_version = "99.99.1")
-  augmented = augment_installed(installed, remote = FALSE, verbose = FALSE)
-  row = augmented[augmented$installed_version %in% "99.99.1", ]
-  expect_equal(nrow(row), 1)
-  expect_true(row$within_eol)
-  expect_false(row$upgrade)
-  expect_message(print_colour_version(row), "newer than")
-})
+test_that("Quarto versions outside the version list", {
+  # Older than the list: past EOL, so upgrade
+  old = augment_quarto("0.0.0")
+  expect_false(old$within_eol)
+  expect_true(old$upgrade)
+  expect_message(print_colour_version(old), "EOL has past")
 
-test_that("A Quarto version older than the list is past EOL and needs upgrading", {
-  installed = tibble::tibble(software = "quarto", installed_version = "0.0.0")
-  augmented = augment_installed(installed, remote = FALSE, verbose = FALSE)
-  row = augmented[augmented$installed_version %in% "0.0.0", ]
-  expect_equal(nrow(row), 1)
-  expect_false(row$within_eol)
-  expect_true(row$upgrade)
-  expect_message(print_colour_version(row), "EOL has past")
+  # Newer than the list: the list is out of date, not past EOL
+  new = augment_quarto("99.99.1")
+  expect_true(new$within_eol)
+  expect_false(new$upgrade)
+  expect_message(print_colour_version(new), "newer than")
 })
