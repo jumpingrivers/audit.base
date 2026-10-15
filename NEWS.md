@@ -1,3 +1,6 @@
+# audit.base 0.7.2 _2026-10-15_
+  * fix: The Quarto Python test installs on Python 3.14. Its `requirements.txt` lists jupyter, matplotlib and numpy with lower bounds instead of 107 exact pins (#54)
+
 # audit.base 0.7.1 _2026-10-14_
   * fix: `check_timezone()` reports the timezone when `timedatectl` fails, and shows a failure as an error rather than a tick (#46)
 
