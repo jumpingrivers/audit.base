@@ -134,3 +134,13 @@ test_that("A Quarto version far in the future is newer than the list, not past E
   expect_false(row$upgrade)
   expect_message(print_colour_version(row), "newer than")
 })
+
+test_that("A Quarto version older than the list is past EOL and needs upgrading", {
+  installed = tibble::tibble(software = "quarto", installed_version = "0.0.0")
+  augmented = augment_installed(installed, remote = FALSE, verbose = FALSE)
+  row = augmented[augmented$installed_version %in% "0.0.0", ]
+  expect_equal(nrow(row), 1)
+  expect_false(row$within_eol)
+  expect_true(row$upgrade)
+  expect_message(print_colour_version(row), "EOL has past")
+})
