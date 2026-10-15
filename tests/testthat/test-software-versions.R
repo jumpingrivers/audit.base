@@ -93,3 +93,32 @@ test_that("get_latest_versions() falls back to cache when remote lookup fails", 
   versions = suppressMessages(get_latest_versions(remote = TRUE))
   expect_equal(versions, suppressMessages(get_latest_versions(remote = FALSE)))
 })
+
+test_that("Versions are compared as numbers, not text", {
+  expect_equal(
+    version_compare(c("1.10", "1.9", NA), c("1.9", "1.10", "1.9"), `>`),
+    c(TRUE, FALSE, NA)
+  )
+  expect_equal(max_version(c("1.9", "1.10", "1.3")), "1.10")
+  expect_equal(min_version(c("1.9", "1.10", "1.3")), "1.3")
+})
+
+augment_quarto = function(version) {
+  installed = tibble::tibble(software = "quarto", installed_version = version)
+  augmented = augment_installed(installed, remote = FALSE, verbose = FALSE)
+  augmented[augmented$installed_version %in% version, ]
+}
+
+test_that("Quarto versions outside the version list", {
+  # Older than the list: past EOL, so upgrade
+  old = augment_quarto("0.0.0")
+  expect_false(old$within_eol)
+  expect_true(old$upgrade)
+  expect_message(print_colour_version(old), "EOL has past")
+
+  # Newer than the list: the list is out of date, not past EOL
+  new = augment_quarto("99.99.1")
+  expect_true(new$within_eol)
+  expect_false(new$upgrade)
+  expect_message(print_colour_version(new), "newer than")
+})

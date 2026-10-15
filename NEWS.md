@@ -1,3 +1,7 @@
+# audit.base 0.7.3 _2026-10-15_
+  * fix: A release newer than the version list is reported as newer than the list, not as past EOL (#55)
+  * fix: Versions are compared as numbers, so Quarto 1.10 counts as newer than 1.9
+
 # audit.base 0.7.2 _2026-10-15_
   * fix: The Quarto Python test installs on Python 3.14. Its `requirements.txt` lists jupyter, matplotlib and numpy with lower bounds instead of 107 exact pins (#54)
   * chore: Add Posit Workbench 2026.10.0 to the cached versions

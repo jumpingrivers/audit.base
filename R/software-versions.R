@@ -49,7 +49,12 @@ print_colour_version = function(row) {
     return(invisible(NULL))
   }
 
-  if (isFALSE(row$within_eol)) {
+  if (is.na(row$patch) && isTRUE(row$within_eol)) {
+    cli::cli_alert_info(
+      "{software_name}: v{row$installed_version} installed, which is newer than \\
+                          audit.base's version list. Try updating audit.base."
+    )
+  } else if (isFALSE(row$within_eol)) {
     cli::cli_alert_danger(
       "{software_name}: v{row$installed_version} installed, \\
                           but EOL has past and should be removed."
@@ -67,6 +72,16 @@ print_colour_version = function(row) {
   invisible(NULL)
 }
 
+# Compare X.Y versions as numbers, so that 1.10 > 1.9. NA if either side is missing.
+version_compare = function(x, y, op) {
+  out = rep(NA, length(x))
+  ok = !is.na(x) & !is.na(y)
+  out[ok] = op(numeric_version(x[ok]), numeric_version(y[ok]))
+  out
+}
+max_version = function(x) as.character(max(numeric_version(x)))
+min_version = function(x) as.character(min(numeric_version(x)))
+
 # Returns X.Y from X.Y.Z
 get_major = function(v) unlist(stringr::str_match(v, "^([0-9]*\\.[0-9]*)")[, 2])
 # Returns Z - use numeric for comparisons
@@ -79,14 +94,14 @@ in_db = function(installed, remote = FALSE) {
   # latest/earliest versions stored in DB
   software_range = get_latest_versions(remote = remote) %>%
     dplyr::group_by(.data$software) %>%
-    dplyr::summarise(latest = max(.data$major), earliest = min(.data$major))
+    dplyr::summarise(latest = max_version(.data$major), earliest = min_version(.data$major))
 
   # Check installed packages are in software range
   installed %>%
     dplyr::left_join(software_range, by = c("software" = "software")) %>%
     dplyr::mutate(
-      to_old = .data$installed_major < .data$earliest,
-      to_new = .data$installed_major > .data$latest
+      to_old = version_compare(.data$installed_major, .data$earliest, `<`),
+      to_new = version_compare(.data$installed_major, .data$latest, `>`)
     ) %>%
     dplyr::select(-"latest", -"earliest")
 }
@@ -147,10 +162,14 @@ versions_to_display = function(installed, remote = FALSE) {
     ) %>%
     dplyr::arrange(.data$software, .data$version)
 
-  # Old versions don't appear - so just tidy up some NAs
+  # Versions missing from the list are past EOL, unless they're newer than the list
   l = dplyr::mutate(
     all,
-    within_eol = ifelse(is.na(.data$within_eol), FALSE, .data$within_eol),
+    within_eol = dplyr::case_when(
+      !is.na(.data$within_eol) ~ .data$within_eol,
+      .data$to_new %in% TRUE ~ TRUE,
+      .default = FALSE
+    ),
     version = ifelse(is.na(.data$version), .data$installed_version, .data$version)
   )
 
