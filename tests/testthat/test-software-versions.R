@@ -93,3 +93,34 @@ test_that("get_latest_versions() falls back to cache when remote lookup fails", 
   versions = suppressMessages(get_latest_versions(remote = TRUE))
   expect_equal(versions, suppressMessages(get_latest_versions(remote = FALSE)))
 })
+
+test_that("Versions are compared as numbers, not text", {
+  expect_equal(
+    version_compare(c("1.10", "1.9", NA), c("1.9", "1.10", "1.9"), `>`),
+    c(TRUE, FALSE, NA)
+  )
+  expect_equal(max_version(c("1.9", "1.10", "1.3")), "1.10")
+  expect_equal(min_version(c("1.9", "1.10", "1.3")), "1.3")
+})
+
+test_that("A release newer than the version list isn't reported as past EOL", {
+  local_mocked_bindings(
+    get_latest_versions = function(remote = FALSE) {
+      versions = tibble::tibble(
+        software = factor("quarto"),
+        version = c("1.8.27", "1.9.38")
+      )
+      versions$major = get_major(versions$version)
+      versions$patch = get_patch(versions$version)
+      versions$version_num = c(2L, 1L)
+      versions$within_eol = TRUE
+      dplyr::group_by(versions, .data$software)
+    }
+  )
+  installed = tibble::tibble(software = "quarto", installed_version = "1.10.18")
+  augmented = augment_installed(installed, remote = FALSE, verbose = FALSE)
+  row = augmented[augmented$installed_version %in% "1.10.18", ]
+  expect_true(row$within_eol)
+  expect_false(row$upgrade)
+  expect_message(print_colour_version(row), "newer than")
+})
