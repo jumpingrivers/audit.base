@@ -44,6 +44,6 @@ get_all_remote_versions = function(page) {
   versions = page %>%
     rvest::html_nodes("h2") %>%
     rvest::html_text()
-  v = stringr::str_extract(versions, "202[0-9]\\.[0-9]{2}\\.[0-9]{1,2}")
+  v = stringr::str_extract(versions, "20[0-9]{2}\\.[0-9]{2}\\.[0-9]{1,2}")
   tibble::tibble(version = v[!is.na(v)], cve = "")
 }
