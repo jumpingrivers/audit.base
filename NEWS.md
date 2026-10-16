@@ -1,3 +1,6 @@
+# audit.base 0.7.11 _2026-10-16_
+  * chore: The sys-deps check and the R, Python, Quarto and Posit version lookups are tested offline against fixtures, and CI also checks on R 4.1, the minimum version (#64)
+
 # audit.base 0.7.10 _2026-10-16_
   * chore: The package is MIT licensed (#63)
 

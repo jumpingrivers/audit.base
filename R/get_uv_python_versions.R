@@ -1,6 +1,6 @@
 get_uv_python_versions = function() {
   url = "https://raw.githubusercontent.com/astral-sh/uv/main/crates/uv-python-managed/download-metadata.json" # nolint: line_length_linter
-  raw_json = jsonlite::fromJSON(url, simplifyVector = FALSE)
+  raw_json = fetch_json(url)
 
   if (length(raw_json) == 0) {
     warning("Fetched Python JSON is empty -- check the URL/branch/tag.")

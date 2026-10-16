@@ -1,9 +1,5 @@
-test_that("Test pkg requirements", {
-  pkgs = get_pkg_requirements(
-    distribution = "ubuntu",
-    release = "22.04"
-  )
-  expect_true(ncol(pkgs) == 2)
-  expect_true(nrow(pkgs) > 750)
-  expect_true("fftw" %in% pkgs$pkg)
+test_that("P3M's reason for rejecting a system reaches the user", {
+  local_mocked_bindings(read_p3m = function(url) list(error = "Unsupported system"))
+  expect_warning(suppressMessages(get_pkg_requirements("rockylinux", "8")), "Unsupported system")
+  expect_identical(suppressMessages(suppressWarnings(get_pkg_requirements("rockylinux", "8"))), NA)
 })

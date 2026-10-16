@@ -1,0 +1,18 @@
+[
+  {
+    "tag_name": "v1.11.6",
+    "prerelease": true
+  },
+  {
+    "tag_name": "v1.10.19",
+    "prerelease": false
+  },
+  {
+    "tag_name": "v1.10.18",
+    "prerelease": false
+  },
+  {
+    "tag_name": "v1.9.38",
+    "prerelease": false
+  }
+]

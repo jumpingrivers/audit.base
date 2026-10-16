@@ -45,12 +45,6 @@ test_that("Unsupported systems warn and give NA instead of stopping", {
   expect_equal(colnames(out), c("sys_libs", "pkg", "n"))
 })
 
-test_that("P3M's reason for rejecting a system reaches the user", {
-  skip_if_offline("packagemanager.posit.co")
-  expect_warning(get_pkg_requirements("rockylinux", "8"), "Unsupported system")
-  expect_identical(suppressWarnings(get_pkg_requirements("rockylinux", "8")), NA)
-})
-
 test_that("clean_libs() keeps the dots in RHEL package names", {
   rhel = c("ID=\"rhel\"", "ID_LIKE=\"fedora\"", "VERSION_ID=\"8.10\"")
   yum = c(
