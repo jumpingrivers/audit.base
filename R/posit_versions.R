@@ -13,17 +13,19 @@ get_posit_versions = function(
   remote = TRUE
 ) {
   type = match.arg(type)
-  versions = if (isTRUE(remote) && type != "drivers") {
-    try(get_posit_remote_versions(type), silent = TRUE)
-  } else {
-    NULL
+  versions = NULL
+  if (isTRUE(remote) && type != "drivers") {
+    versions = tryCatch(
+      get_posit_remote_versions(type),
+      error = function(e) {
+        cli::cli_alert_warning(
+          "Unable to scrape NEWS page for {type}: {conditionMessage(e)}. Falling back to cache"
+        )
+        NULL
+      }
+    )
   }
-  if ("try-error" %in% class(versions) || is.null(versions)) {
-    if (type != "drivers") {
-      cli::cli_alert_warning(
-        "Unable to scrape NEWS page for {type}. Falling back to cache"
-      )
-    }
+  if (is.null(versions)) {
     fname = system.file(
       "extdata",
       "versions",
@@ -35,7 +37,8 @@ get_posit_versions = function(
     versions = utils::read.csv(fname, header = TRUE, comment.char = "#", colClasses = "character")
     tibble::as_tibble(versions)
   }
-  versions = dplyr::arrange(versions, dplyr::desc(.data$version))
+  # Newest first, compared as numbers so 2024.12.10 sorts above 2024.12.2
+  versions = versions[order(numeric_version(versions$version), decreasing = TRUE), ]
   # Versions without a CVE have an empty string; make these NA so they aren't counted
   versions$cve = dplyr::na_if(trimws(as.character(versions$cve)), "")
   versions
@@ -64,7 +67,7 @@ audit_posit_version = function(
     return(invisible(NULL))
   }
   versions = get_posit_versions(type = type)
-  row_number = lookup_version(posit_version, type = type)
+  row_number = lookup_version(posit_version, versions)
 
   if (is.na(row_number)) {
     cli::cli_alert_info(
@@ -85,45 +88,28 @@ audit_posit_version = function(
   invisible(NULL)
 }
 
-lookup_version = function(posit_version, type) {
-  versions = get_posit_versions(type = type)
-  version_as_date = version_to_date(posit_version)
-  all_dates = unlist(purrr::map(versions$version, version_to_date))
-
-  if (is.na(version_as_date) || version_as_date < min(all_dates)) {
-    # Older than DB
-    row_number = NA_integer_
-  } else if (version_as_date > max(all_dates)) {
-    # Newer than DB
-    row_number = 1L
-  } else {
-    # Return matching version; multiple CVEs, so just pick 1
-    # Rtns an NA when not in the DB
-    # Some versions add on additional info, .e.g. 2023.06.0.pro1 - delete
-    posit_version = stringr::str_extract(
-      posit_version,
-      "^(202[0-9])\\.([01][0-9])\\.[0-9]"
-    )
-    row_number = which(versions$version == posit_version)[1]
+# Row of `versions` (sorted newest first) that `posit_version` sits at:
+# 1 when it's at or above the newest entry, otherwise one more than the number of
+# strictly newer versions. NA when it can't be parsed or predates the list.
+lookup_version = function(posit_version, versions) {
+  version = parse_posit_version(posit_version)
+  all_versions = numeric_version(versions$version)
+  if (is.na(version) || version < min(all_versions)) {
+    return(NA_integer_)
   }
-  row_number
+  sum(all_versions > version) + 1L
 }
 
-version_to_date = function(version) {
-  # Old style version
-  if (is_missing_version(version) || !is_new_version(version)) {
+# Year.month.patch, ignoring suffixes such as .pro1; NA for old style versions (1.9.0)
+parse_posit_version = function(version) {
+  if (is_missing_version(version)) {
     return(NA)
   }
-  as_date = stringr::str_match_all(version, "^(202[0-9])\\.([01][0-9])")[[1]]
-  as.Date(paste(as_date[1, 2], as_date[1, 3], "01", sep = "-"))
+  version = stringr::str_extract(version, "^20[0-9]{2}\\.[01][0-9]\\.[0-9]+")
+  if (is.na(version)) NA else numeric_version(version)
 }
 
 # NA or character(0) when the version couldn't be found
 is_missing_version = function(version) {
   length(version) != 1L || is.na(version)
-}
-
-# Old style versions are 1.9.0 (2021-07)
-is_new_version = function(version) {
-  stringr::str_detect(version, pattern = "^202[0-9]\\.[01][0-9].[0-9]")
 }

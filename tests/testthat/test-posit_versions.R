@@ -20,23 +20,6 @@ test_that("Testing check server", {
     regexp = "up to date"
   )
 
-  # Version not in DB
-  expect_equal(lookup_version(posit_version = "2029.01.01", type), 1)
-  # Really old version not in the DB
-  expect_equal(
-    lookup_version(posit_version = "2010.01.01", type),
-    NA_integer_
-  )
-
-  expect_equal(
-    lookup_version(posit_version = "Not in DB", type),
-    NA_integer_
-  )
-
-  # No version in DB
-  v = lookup_version(posit_version = "2022.10.31", type)
-  expect_true(is.na(v))
-
   expect_message(audit_posit_version("2022.10.0", type), regexp = "out of date")
 })
 
@@ -79,5 +62,28 @@ test_that("A version that couldn't be found is reported, not an error", {
     expect_message(audit_posit_version(version, "workbench"), "Couldn't find")
     msg = get_quarto_posit_version_msg(list(posit_version = version), "workbench")
     expect_match(msg, "couldn't find")
+  }
+})
+
+test_that("lookup_version() places a version against the list", {
+  versions = tibble::tibble(version = c("2026.10.0", "2026.09.0", "2026.08.2", "2026.08.0"))
+  cases = tibble::tribble(
+    ~posit_version, ~row,
+    "2026.10.0", 1L,
+    "2026.10.1", 1L, # patch after the newest entry
+    "2026.10.0.pro1", 1L,
+    "2030.01.0", 1L,
+    "2026.08.3", 3L, # patch missing from the list
+    "2026.08.0", 4L,
+    "2025.01.0", NA, # older than the list
+    "1.9.0", NA,
+    "Not a version", NA
+  )
+  for (i in seq_len(nrow(cases))) {
+    expect_identical(
+      lookup_version(cases$posit_version[i], versions),
+      cases$row[i],
+      label = cases$posit_version[i]
+    )
   }
 })

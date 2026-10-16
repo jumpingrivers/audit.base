@@ -75,23 +75,24 @@ get_quarto_posit_version_msg = function(
   out,
   type = c("connect", "workbench", "drivers")
 ) {
+  type = match.arg(type)
   posit_version = out$posit_version
   if (is_missing_version(posit_version)) {
     return(glue::glue("We couldn't find which version of Posit {type} is installed."))
   }
-  row_number = lookup_version(posit_version, type)
+  versions = get_posit_versions(type = type)
+  row_number = lookup_version(posit_version, versions)
   status = version_status(row_number)
   if (status == "unknown") {
     msg = "Posit {type} (v{posit_version}), isn't in our database.
     This could be because we've missed it or it's really old."
   } else if (status == "outdated") {
-    versions = get_posit_versions(type = type)
     newer_versions = versions[seq_len(row_number - 1), ] # nolint
     no_of_versions = length(unique(newer_versions$version)) # nolint
     no_of_cves = count_cves(newer_versions) # nolint
     msg = "Posit {type} is out of date (v{posit_version}).
              There are {no_of_versions} newer versions that fix {no_of_cves} CVEs.
-             The latest version is v{versions[1, 1]}."
+             The latest version is v{versions$version[1]}."
   } else {
     msg = "Posit {type} is up to date."
   }
@@ -107,7 +108,8 @@ get_quarto_posit_version_status = function(
   out,
   type = c("connect", "workbench", "drivers")
 ) {
-  version_status(lookup_version(out$posit_version, type))
+  type = match.arg(type)
+  version_status(lookup_version(out$posit_version, get_posit_versions(type = type)))
 }
 
 version_status = function(row_number) {
