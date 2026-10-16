@@ -73,3 +73,11 @@ test_that("count_cves() counts each CVE once", {
   expect_equal(count_cves(versions), 2L)
   expect_equal(count_cves(versions[4, ]), 0L)
 })
+
+test_that("A version that couldn't be found is reported, not an error", {
+  for (version in list(NA_character_, character(0))) {
+    expect_message(audit_posit_version(version, "workbench"), "Couldn't find")
+    msg = get_quarto_posit_version_msg(list(posit_version = version), "workbench")
+    expect_match(msg, "couldn't find")
+  }
+})

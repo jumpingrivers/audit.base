@@ -76,6 +76,9 @@ get_quarto_posit_version_msg = function(
   type = c("connect", "workbench", "drivers")
 ) {
   posit_version = out$posit_version
+  if (is_missing_version(posit_version)) {
+    return(glue::glue("We couldn't find which version of Posit {type} is installed."))
+  }
   row_number = lookup_version(posit_version, type)
   status = version_status(row_number)
   if (status == "unknown") {

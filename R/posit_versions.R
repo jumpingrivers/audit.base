@@ -59,6 +59,10 @@ audit_posit_version = function(
   type = c("connect", "workbench", "drivers")
 ) {
   type = match.arg(type)
+  if (is_missing_version(posit_version)) {
+    cli::cli_alert_info("Couldn't find which version of Posit {type} is installed")
+    return(invisible(NULL))
+  }
   versions = get_posit_versions(type = type)
   row_number = lookup_version(posit_version, type = type)
 
@@ -107,11 +111,16 @@ lookup_version = function(posit_version, type) {
 
 version_to_date = function(version) {
   # Old style version
-  if (!is_new_version(version)) {
+  if (is_missing_version(version) || !is_new_version(version)) {
     return(NA)
   }
   as_date = stringr::str_match_all(version, "^(202[0-9])\\.([01][0-9])")[[1]]
   as.Date(paste(as_date[1, 2], as_date[1, 3], "01", sep = "-"))
+}
+
+# NA or character(0) when the version couldn't be found
+is_missing_version = function(version) {
+  length(version) != 1L || is.na(version)
 }
 
 # Old style versions are 1.9.0 (2021-07)
