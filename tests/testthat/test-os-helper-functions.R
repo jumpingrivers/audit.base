@@ -50,3 +50,24 @@ test_that("P3M's reason for rejecting a system reaches the user", {
   expect_warning(get_pkg_requirements("rockylinux", "8"), "Unsupported system")
   expect_identical(suppressWarnings(get_pkg_requirements("rockylinux", "8")), NA)
 })
+
+test_that("clean_libs() keeps the dots in RHEL package names", {
+  rhel = c("ID=\"rhel\"", "ID_LIKE=\"fedora\"", "VERSION_ID=\"8.10\"")
+  yum = c(
+    "Installed Packages",
+    "java-1.8.0-openjdk-devel.x86_64    1:1.8.0.412    @appstream",
+    "libgit2_1.7-devel.x86_64    1.7.2    @epel",
+    "gdal3.4-devel.x86_64    3.4.3-1    @epel",
+    "a-very-long-package-name-that-yum-wraps.noarch",
+    "                                   1.0-1          @appstream"
+  )
+  expected = c(
+    "a-very-long-package-name-that-yum-wraps",
+    "gdal3.4-devel",
+    "java-1.8.0-openjdk-devel",
+    "libgit2_1.7-devel"
+  )
+  expect_identical(clean_libs(rhel, yum), expected)
+  # rpm -qa --qf "%{NAME}\\n" gives the names as they are
+  expect_identical(clean_libs(rhel, expected), expected)
+})

@@ -64,9 +64,9 @@ get_installed_libs = function() {
   if (identical(tool, "apt")) {
     libs = processx::run("apt", args = c("list", "--installed"))
     libs = stringr::str_split(libs$stdout, "\n")[[1]][-1]
-  } else if (identical(tool, "yum")) {
-    libs = processx::run("yum", args = c("list", "installed"))$stdout
-    libs = stringr::str_split(libs, "\n")[[1]][-(1:2)]
+  } else if (identical(tool, "rpm")) {
+    libs = processx::run("rpm", args = c("-qa", "--qf", "%{NAME}\\n"))$stdout
+    libs = stringr::str_split(libs, "\n")[[1]]
   } else {
     libs = character(0)
   }
@@ -83,8 +83,13 @@ clean_libs = function(os_release, libs) {
   if (identical(tool, "apt")) {
     libs = stringr::str_match(libs, "^[^/]*")[, 1]
     libs = switch_ubuntu_aliases(libs)
-  } else if (identical(tool, "yum")) {
-    libs = stringr::str_match(libs, "^[^\\.]*")[, 1]
+  } else if (identical(tool, "rpm")) {
+    # rpm -qa gives bare names; `yum list installed` lines start name.arch.
+    # Names can contain dots (java-1.8.0-openjdk), so strip only the architecture.
+    libs = libs[!stringr::str_detect(libs, "^(Installed Packages|Last metadata)")]
+    libs = stringr::str_extract(libs, "^\\S+")
+    libs = stringr::str_remove(libs, "\\.(x86_64|noarch|i[3-6]86|aarch64|ppc64le|s390x)$")
+    libs = libs[!is.na(libs) & nzchar(libs)]
   } else {
     os_name = os_release_value(os_release_df, "pretty_name") # nolint
     cli::cli_warn("Can't list the installed system libraries on {os_name}")
