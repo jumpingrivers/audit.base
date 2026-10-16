@@ -36,10 +36,6 @@ get_latest_versions_remote = function() {
 }
 
 get_latest_versions_from_posit = function(type = c("r", "python")) {
-  if (!requireNamespace("jsonlite")) {
-    cli::cli_alert_info("Missing package - jsonlite")
-    return(invisible(NULL))
-  }
   type = match.arg(type)
   url = glue::glue("https://cdn.posit.co/{type}/versions.json")
   versions = unlist(jsonlite::read_json(url))
