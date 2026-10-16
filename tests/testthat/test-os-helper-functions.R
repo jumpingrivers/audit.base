@@ -46,7 +46,7 @@ test_that("Unsupported systems warn and give NA instead of stopping", {
 })
 
 test_that("P3M's reason for rejecting a system reaches the user", {
-  skip_if_offline("packagemanager.rstudio.com")
+  skip_if_offline("packagemanager.posit.co")
   expect_warning(get_pkg_requirements("rockylinux", "8"), "Unsupported system")
   expect_identical(suppressWarnings(get_pkg_requirements("rockylinux", "8")), NA)
 })

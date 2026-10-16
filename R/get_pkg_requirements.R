@@ -1,9 +1,9 @@
-# https://packagemanager.rstudio.com/__api__/swagger/index.html#/default/get_repos
+# https://packagemanager.posit.co/__api__/swagger/index.html#/default/get_repos
 # NA, with P3M's reason as a warning, when P3M doesn't support the system
 get_pkg_requirements = function(
   distribution,
   release,
-  base_url = "https://packagemanager.rstudio.com/__api__/repos/",
+  base_url = "https://packagemanager.posit.co/__api__/repos/",
   repo_id = 2
 ) {
   config_url = glue::glue(
