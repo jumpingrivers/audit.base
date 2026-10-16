@@ -28,6 +28,10 @@ get_quarto_server_header = function(out) {
 #' @export
 get_quarto_sys_deps = function(out) {
   sys_deps = out$sys_deps
+  # NA when the system libraries couldn't be checked
+  if (!is.data.frame(sys_deps)) {
+    sys_deps = tibble::tibble(pkg = character(0), sys_libs = character(0))
+  }
   sys_deps %>%
     dplyr::group_by(.data$sys_libs) %>%
     dplyr::reframe(

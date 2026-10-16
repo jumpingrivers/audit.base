@@ -1,3 +1,7 @@
+# audit.base 0.7.6 _2026-10-16_
+  * fix: `check_sys_deps()` reads the distribution from os-release `ID` and `ID_LIKE`, and passes `VERSION_ID` to Posit Package Manager, so Ubuntu 26.04, RHEL 10, Debian, Rocky Linux and AlmaLinux work. If P3M or the package listing doesn't support a system, it warns with the reason and returns `NA` rather than stopping the audit (#58)
+  * fix: System requirements come from `packagemanager.posit.co`, Posit Package Manager's current address
+
 # audit.base 0.7.5 _2026-10-16_
   * fix: The Quarto version list comes from GitHub's releases, so a new minor release no longer marks the previous one as past EOL (#60)
 
