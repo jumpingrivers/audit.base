@@ -1,3 +1,6 @@
+# audit.base 0.7.5 _2026-10-16_
+  * fix: The Quarto version list comes from GitHub's releases, so a new minor release no longer marks the previous one as past EOL (#60)
+
 # audit.base 0.7.4 _2026-10-16_
   * fix: `get_uv_python_versions()` works before R 4.4, as `%||%` is imported from rlang. DESCRIPTION requires R 4.1.0 and imports jsonlite (#61)
 
