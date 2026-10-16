@@ -1,33 +1,26 @@
-test_that("Quarto Outputs", {
-  out = list()
-  out$posit_version = "2022.10.0"
-  msg = get_quarto_posit_version_msg(out, type = "connect")
-  expect_true(stringr::str_detect(msg, "CVEs"))
+test_that("The Posit version message and status agree", {
+  local_posit_news()
+  cases = tibble::tribble(
+    ~posit_version, ~status, ~msg,
+    "2026.10.0", "current", "is up to date",
+    "2025.07.0", "outdated", "fix 2 CVEs",
+    "2012.10.0", "unknown", "in our database"
+  )
+  for (i in seq_len(nrow(cases))) {
+    out = list(posit_version = cases$posit_version[i])
+    msg = get_quarto_posit_version_msg(out, "connect")
+    expect_match(msg, cases$msg[i], label = cases$posit_version[i])
+    expect_identical(get_quarto_posit_version_status(out, "connect"), cases$status[i])
+  }
+})
 
-  out$posit_version = "2012.10.0"
-  msg = get_quarto_posit_version_msg(out, "connect")
-  expect_true(stringr::str_detect(msg, "in our database"))
-
-  out$posit_version = get_posit_versions("connect")[1, ]$version
-  msg = get_quarto_posit_version_msg(out, "connect")
-  expect_true(stringr::str_detect(msg, "is up to date"))
-
+test_that("Server headers are tabulated for the report", {
+  skip_if_offline("google.com")
   out = list(server_headers = serverHeaders::check("google.com"))
   q = get_quarto_server_header(out)
   expect_equal(colnames(q), c("header", "status", "message", "value"))
   expect_true(all(is.list(q$message)))
   expect_true(nrow(q) >= 6)
-})
-
-test_that("Posit version status matches the message", {
-  out = list(posit_version = "2022.10.0")
-  expect_equal(get_quarto_posit_version_status(out, "connect"), "outdated")
-
-  out$posit_version = "2012.10.0"
-  expect_equal(get_quarto_posit_version_status(out, "connect"), "unknown")
-
-  out$posit_version = get_posit_versions("connect")[1, ]$version
-  expect_equal(get_quarto_posit_version_status(out, "connect"), "current")
 })
 
 test_that("version_status maps row numbers", {

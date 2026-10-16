@@ -1,0 +1,41 @@
+{
+  "requirements": [
+    {
+      "name": "curl",
+      "requirements": {
+        "packages": [
+          "libcurl4-openssl-dev",
+          "libssl-dev"
+        ]
+      }
+    },
+    {
+      "name": "fftw",
+      "requirements": {
+        "packages": [
+          "libfftw3-dev"
+        ]
+      }
+    },
+    {
+      "name": "sf",
+      "requirements": {
+        "packages": [
+          "libgdal-dev",
+          "gdal-bin",
+          "libgeos-dev",
+          "libproj-dev",
+          "libsqlite3-dev"
+        ]
+      }
+    },
+    {
+      "name": "xml2",
+      "requirements": {
+        "packages": [
+          "libxml2-dev"
+        ]
+      }
+    }
+  ]
+}

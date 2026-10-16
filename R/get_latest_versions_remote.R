@@ -22,9 +22,7 @@ get_latest_versions_remote = function() {
 # The latest patch of each Quarto minor release. Most releases are prereleases, so the newest 100
 # reach back several minors; older minors come from the fixed list
 get_quarto_versions = function() {
-  releases = jsonlite::read_json(
-    "https://api.github.com/repos/quarto-dev/quarto-cli/releases?per_page=100"
-  )
+  releases = fetch_json("https://api.github.com/repos/quarto-dev/quarto-cli/releases?per_page=100")
   stable = purrr::discard(releases, ~ isTRUE(.x$prerelease))
   tags = stringr::str_remove(purrr::map_chr(stable, "tag_name"), "^v")
   old = c("1.0.38", "1.1.189", "1.2.475", "1.3.450", "1.4.557", "1.5.57", "1.6.43")
@@ -42,7 +40,7 @@ latest_patch_per_minor = function(versions) {
 get_latest_versions_from_posit = function(type = c("r", "python")) {
   type = match.arg(type)
   url = glue::glue("https://cdn.posit.co/{type}/versions.json")
-  versions = unlist(jsonlite::read_json(url))
+  versions = unlist(fetch_json(url))
   versions = unname(versions)
   tibble::tibble(
     patch = get_patch(versions),
@@ -55,4 +53,9 @@ get_latest_versions_from_posit = function(type = c("r", "python")) {
     dplyr::mutate(patch = max(.data$patch)) %>%
     dplyr::slice(1) %>%
     dplyr::pull(versions)
+}
+
+# JSON from a URL as nested lists
+fetch_json = function(url) {
+  jsonlite::fromJSON(url, simplifyVector = FALSE)
 }

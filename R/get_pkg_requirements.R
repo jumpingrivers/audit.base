@@ -14,12 +14,10 @@ get_pkg_requirements = function(
     "Connecting to {url} for system requirements"
   )
 
-  res = httr::GET(url, httr::timeout(60))
-  r = httr::content(res)
-  if (httr::http_error(res)) {
-    reason = if (is.list(r) && is.character(r$error)) r$error else httr::http_status(res)$message # nolint
+  r = read_p3m(url)
+  if (!is.null(r$error)) {
     cli::cli_warn(
-      "Posit Package Manager can't list system requirements for {distribution} {release}: {reason}"
+      "Posit Package Manager can't list system requirements for {distribution} {release}: {r$error}"
     )
     return(NA)
   }
@@ -28,4 +26,15 @@ get_pkg_requirements = function(
     r$requirements,
     ~ tibble::tibble(pkg = .x$name, sys_libs = unlist(.x$requirements$packages))
   )
+}
+
+# P3M's response as a list. On an HTTP error, `error` holds P3M's reason
+read_p3m = function(url) {
+  res = httr::GET(url, httr::timeout(60))
+  r = httr::content(res)
+  if (!httr::http_error(res)) {
+    return(r)
+  }
+  reason = if (is.list(r) && is.character(r$error)) r$error else httr::http_status(res)$message
+  list(error = reason)
 }

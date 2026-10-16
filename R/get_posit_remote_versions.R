@@ -8,7 +8,7 @@ get_posit_remote_versions = function(type = c("connect", "workbench")) {
   } else {
     "https://docs.posit.co/ide/news/"
   }
-  page = rvest::read_html(url)
+  page = read_posit_news(url)
   sections = rvest::html_elements(page, "section")
   v_tibbles = purrr::map_df(sections, extract_posit_cves)
   all_v = get_all_remote_versions(page) %>%
@@ -46,4 +46,8 @@ get_all_remote_versions = function(page) {
     rvest::html_text()
   v = stringr::str_extract(versions, "20[0-9]{2}\\.[0-9]{2}\\.[0-9]{1,2}")
   tibble::tibble(version = v[!is.na(v)], cve = "")
+}
+
+read_posit_news = function(url) {
+  rvest::read_html(url)
 }

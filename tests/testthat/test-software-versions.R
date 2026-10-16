@@ -76,6 +76,7 @@ test_that("Testing augment_installed (future))", {
 
 test_that("Ensure that software versions are up to date", {
   testthat::skip_on_ci()
+  skip_if_offline("cdn.posit.co")
   versions = get_latest_versions(remote = FALSE)
   latest = get_latest_versions_remote()
 
