@@ -21,3 +21,4 @@ rsconnect/
 \.venv
 \.husky
 \.claude
+^LICENSE\.md$
