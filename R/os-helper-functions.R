@@ -22,13 +22,13 @@ get_p3m_system = function(os_release_df) {
   list(distribution = distribution, release = release)
 }
 
-# apt or yum, which list installed packages in different formats; NA for any other OS
+# apt or rpm, which list installed packages in different formats; NA for any other OS
 get_package_tool = function(os_release_df) {
   distribution = get_p3m_system(os_release_df)$distribution
   if (distribution %in% c("ubuntu", "debian")) {
     "apt"
-  } else if (distribution %in% c("redhat", "centos")) {
-    "yum"
+  } else if (distribution %in% c("redhat", "centos", "opensuse", "sle")) {
+    "rpm"
   } else {
     NA_character_
   }

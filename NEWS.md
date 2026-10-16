@@ -1,3 +1,6 @@
+# audit.base 0.7.7 _2026-10-16_
+  * fix: `clean_libs()` strips only the architecture from RHEL package names, so names with dots, such as `java-1.8.0-openjdk-devel`, `libgit2_1.7-devel` and `gdal3.4`, are no longer reported missing. `get_installed_libs()` lists names with `rpm -qa`, which also works on SUSE (#59)
+
 # audit.base 0.7.6 _2026-10-16_
   * fix: `check_sys_deps()` reads the distribution from os-release `ID` and `ID_LIKE`, and passes `VERSION_ID` to Posit Package Manager, so Ubuntu 26.04, RHEL 10, Debian, Rocky Linux and AlmaLinux work. If P3M or the package listing doesn't support a system, it warns with the reason and returns `NA` rather than stopping the audit (#58)
   * fix: System requirements come from `packagemanager.posit.co`, Posit Package Manager's current address
