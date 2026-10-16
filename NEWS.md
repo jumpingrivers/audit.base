@@ -1,3 +1,6 @@
+# audit.base 0.7.8 _2026-10-16_
+  * fix: `audit_posit_version()` and `get_quarto_posit_version_msg()` say the Posit version couldn't be found when it's `NA`, instead of erroring (jumpingrivers/audit.workbench#38)
+
 # audit.base 0.7.7 _2026-10-16_
   * fix: `clean_libs()` strips only the architecture from RHEL package names, so names with dots, such as `java-1.8.0-openjdk-devel`, `libgit2_1.7-devel` and `gdal3.4`, are no longer reported missing. `get_installed_libs()` lists names with `rpm -qa`, which also works on SUSE (#59)
 
