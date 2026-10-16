@@ -1,3 +1,6 @@
+# audit.base 0.7.9 _2026-10-16_
+  * fix: Posit versions are compared as numbers, so a patch release newer than the list or missing from it is reported as current or out of date, not "really old", and 2030.x versions are recognised. The scrape fallback warning gives the reason, and `get_quarto_posit_version_msg()` returns one message when `type` is left at its default (#62)
+
 # audit.base 0.7.8 _2026-10-16_
   * fix: `audit_posit_version()` and `get_quarto_posit_version_msg()` say the Posit version couldn't be found when it's `NA`, instead of erroring (jumpingrivers/audit.workbench#38)
 
