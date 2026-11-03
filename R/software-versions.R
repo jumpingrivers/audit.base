@@ -224,8 +224,11 @@ add_python_eol = function(versions) {
   versions
 }
 
+# Quarto before 1.11 bundles a Deno that trusts the compromised eMudhra and emSign keys,
+# and the fix isn't backported (quarto-dev/quarto-cli#15152)
 add_quarto_eol = function(versions) {
-  versions[versions$software == "quarto", ]$within_eol = TRUE
+  is_quarto = versions$software == "quarto"
+  versions[is_quarto, ]$within_eol = numeric_version(versions$major[is_quarto]) >= "1.11"
   versions
 }
 add_r_eol = function(versions) {
