@@ -123,3 +123,14 @@ test_that("Quarto versions outside the version list", {
   expect_false(new$upgrade)
   expect_message(print_colour_version(new), "newer than")
 })
+
+test_that("Quarto before 1.11 is past EOL (Deno certificate fix)", {
+  old = augment_quarto("1.10.20")
+  expect_false(old$within_eol)
+  expect_message(print_colour_version(old), "EOL has past")
+
+  current = augment_quarto("1.11.9")
+  expect_true(current$within_eol)
+  expect_false(current$upgrade)
+  expect_message(print_colour_version(current), "Latest version installed")
+})
