@@ -1,3 +1,6 @@
+# audit.base 0.7.12 _2026-11-03_
+  * fix: Quarto versions before 1.11 are reported as past EOL, as they lack the Deno certificate fix for the compromised eMudhra and emSign keys. The cached version list includes Quarto 1.11.9 and 1.10.20 (#73)
+
 # audit.base 0.7.11 _2026-10-16_
   * chore: The sys-deps check and the R, Python, Quarto and Posit version lookups are tested offline against fixtures, and CI also checks on R 4.1, the minimum version (#64)
 
